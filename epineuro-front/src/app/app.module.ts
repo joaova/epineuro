@@ -1,18 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import {MatInputModule} from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { PacienteComponent } from './paciente/paciente.component';
+import { TelaLoginComponent } from './tela-login/tela-login.component';
+import { PainelComponent } from './painel/painel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PacienteComponent
+    TelaLoginComponent,
+    PainelComponent
   ],
   imports: [
     BrowserModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    HttpClientModule,
+    MatInputModule
+  ],
+  exports: [
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
