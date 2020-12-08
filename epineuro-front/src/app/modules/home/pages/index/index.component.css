@@ -1,0 +1,14 @@
+.imagens {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.imagens img{
+    height: 25vh;
+}
+
+header {
+    text-align: center;
+    color: #3f51b5;
+}

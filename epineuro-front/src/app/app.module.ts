@@ -1,29 +1,27 @@
+import { AuthService } from './modules/security/auth.service';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import {MatInputModule} from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TelaLoginComponent } from './tela-login/tela-login.component';
-import { PainelComponent } from './painel/painel.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TelaLoginComponent,
-    PainelComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     NoopAnimationsModule,
     HttpClientModule,
-    MatInputModule
   ],
   exports: [
-    MatInputModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
