@@ -1,16 +1,17 @@
-<form>
+<form [formGroup]="formLogin" (ngSubmit)="login()">
     <mat-form-field appearance="fill">
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="pat@example.com" [formControl]="email" required>
-        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        <input matInput placeholder="pat@example.com" formControlName="email" required>
+        <mat-error *ngIf="this.formLogin.get('email').invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Senha</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error *ngIf="this.formLogin.get('password').invalid">{{getErrorMessagePassword()}}</mat-error>
     </mat-form-field>
     <button mat-button class="login-btn" routerLink="/admin/pacientes">Login</button>
 </form>

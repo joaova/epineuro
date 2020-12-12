@@ -1,3 +1,4 @@
+import { AuthService } from './../../../security/auth.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -14,6 +15,7 @@ export class AdminComponent implements OnInit {
   (
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer,
+    private service: AuthService
   ) 
   {
     iconRegistry.addSvgIcon(
@@ -29,6 +31,10 @@ export class AdminComponent implements OnInit {
   
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.service.logout();
   }
 
 }

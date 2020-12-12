@@ -1,3 +1,4 @@
+import { AuthGuard } from './../security/auth.guard';
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
 import { IndexComponent } from './../home/pages/index/index.component';
 import { TeamComponent } from './../home/pages/team/team.component';
@@ -11,11 +12,11 @@ const routes: Routes = [
     {path: '', component: AdminComponent,
 
       children: [
-        {path: '', component: IndexComponent},
-        {path: 'pacientes', component: PatientsComponent},
-        {path: 'sobre', component: AboutComponent},
-        {path: 'equipe', component: TeamComponent},
-        {path: 'cadastro', component: RegisterPatientComponent}
+        {path: '', component: IndexComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
+        {path: 'pacientes', component: PatientsComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
+        {path: 'sobre', component: AboutComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
+        {path: 'equipe', component: TeamComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
+        {path: 'cadastro', component: RegisterPatientComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }}
       ]
     }
 ];

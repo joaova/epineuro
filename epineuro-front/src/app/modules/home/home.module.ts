@@ -1,4 +1,5 @@
-import { LoginComponent } from '../security/login/login.component';
+import { SecurityModule } from './../security/security.module';
+import { LoginComponent } from './../security/login/login.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
@@ -21,6 +22,7 @@ import { TeamComponent } from './pages/team/team.component';
     CommonModule,
     SharedModule,
     HomeRoutingModule,
+    SecurityModule
   ]
 })
 export class HomeModule { }

@@ -20,6 +20,7 @@ public class Paciente implements Serializable {
 	@Id
 	private Long id;
 	
+	private String cid;
 	private Integer sexo;
 	private String corAutoDeclarada;
 	private String paisOrigem;
@@ -32,9 +33,6 @@ public class Paciente implements Serializable {
 	
 //	@Setter(AccessLevel.NONE)
 //	private Integer idade; //TODO inicializar quando?
-	
-//	private Integer numeroInternacoes;
-	private String cid;
 	
 	public Sexo getSexo() {
 		return Sexo.toEnum(sexo);

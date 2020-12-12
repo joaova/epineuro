@@ -1,3 +1,4 @@
+import { SecurityModule } from './../security/security.module';
 import { SharedModule } from './../../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
@@ -13,7 +14,8 @@ import { RegisterPatientComponent } from './pages/register-patient/register-pati
   imports: [
     CommonModule,
     AdminRoutingModule,
-    SharedModule
+    SharedModule,
+    SecurityModule
   ]
 })
 export class AdminModule { }
