@@ -1,5 +1,35 @@
-<header>
-    <h1>
-        Tela de cadastro paciente:
-    </h1>
-</header>
+<form action="">
+    <div class="container">
+        <div class="row">
+            <mat-form-field class="example-full-width">
+                <input type="text"
+                    placeholder="CID-10"
+                    aria-label="Number"
+                    matInput
+                    [formControl]="myControl"
+                    [matAutocomplete]="auto"
+                    #termoDaPesquisa
+                    (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())">
+                <button mat-button *ngIf="termoDaPesquisa.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
+                  <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome">
+                    {{disease.codigo + ' ' + disease.nome}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <button mat-button mat-icon-button (click)="addICD()" class="add-btn"><mat-icon>add</mat-icon></button>
+        </div>
+        <div class="row">
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let cid of cids; index as i" #linkRef>
+                    <span>{{cid}}</span>
+                    <button class="item-btn" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeDisease(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-list-item>
+              </mat-list>
+        </div>   
+    </div>
+</form>

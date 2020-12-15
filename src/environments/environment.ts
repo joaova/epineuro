@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   logRequest: true,
   traceRequest: true,
-  URLSERVIDOR: 'http://localhost:8080/'
+  URLSERVIDOR: 'http://localhost:8080/',
+  URLCIDAPI: 'https://cid10-api.herokuapp.com/cid10/'
 };
 
 /*
