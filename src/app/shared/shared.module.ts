@@ -16,10 +16,11 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [FooterComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -64,6 +65,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatTableModule,
     MatPaginatorModule,
     MatAutocompleteModule,
+    FooterComponent
   ]
 })
 

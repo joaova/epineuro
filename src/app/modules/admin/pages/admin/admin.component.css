@@ -1,9 +1,23 @@
 .layout {
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+nav {
+    flex-shrink: 0;
+}
+
+.secondNavLine {
+  justify-content: space-between;
+}
+
+.content{
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }
 
 mat-icon {
@@ -18,20 +32,6 @@ mat-icon {
     flex: 1 1 auto;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.footer {
-    font-size: 1em;
-    justify-content: center;
-    background-color: #3f51b5;
-    color: white;
-}
-
 .login-btn {
     background-color: #fafafa;
     color: #3f51b5;
@@ -41,6 +41,16 @@ footer {
     background-color: #3f51b5;
     color: white;
 }
+  
+.sidenav-container {
+    position: absolute;
+    width: auto;
+    height: 300px;
+    background-color: white;
+  }
 
+.sidenav {
+    border-right: 1px solid black;
+}
 
 

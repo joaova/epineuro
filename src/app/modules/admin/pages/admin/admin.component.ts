@@ -28,7 +28,8 @@ export class AdminComponent implements OnInit {
         'woman',
         sanitizer.bypassSecurityTrustResourceUrl('../../../../../assets/icons/woman.svg'));
   }
-  
+
+  isNavExtended: boolean = false;
 
   ngOnInit(): void {
   }
@@ -37,4 +38,14 @@ export class AdminComponent implements OnInit {
     this.service.logout();
   }
 
+  showExtendedNav() {
+    if (this.isNavExtended == false) {
+      this.isNavExtended = true;
+      return;
+    }
+
+    this.isNavExtended = false;
+  }
+
 }
+ 

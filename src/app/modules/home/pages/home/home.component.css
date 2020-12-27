@@ -1,9 +1,23 @@
 .layout {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+}
+
+nav {
+    flex-shrink: 0;
+}
+
+.secondNavLine {
+    justify-content: space-between;
+  }
+
+.content{
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
 }
 
 mat-icon {
@@ -13,23 +27,9 @@ mat-icon {
 #titulo {
     font-size: 1.5em;
 }
-
+ 
 .spacer {
     flex: 1 1 auto;
-}
-
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.footer {
-    font-size: 1em;
-    justify-content: center;
-    background-color: #3f51b5;
-    color: #fafafa;
 }
 
 .login-btn {

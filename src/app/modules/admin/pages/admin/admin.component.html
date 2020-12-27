@@ -1,56 +1,53 @@
 <div class="layout">
+  <nav>
     <mat-toolbar class="header">
-        <a mat-button fxHide.lt-md routerLink="/admin"> 
-            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
-            <span id="titulo">Epineuro</span>
-        </a> 
-        <a mat-button fxHide fxShow.lt-md (click)="sidenav.toggle()">
-            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
-        </a>
-        <a mat-button fxHide.lt-md routerLink="/admin/sobre">Sobre o projeto</a>
-        <a mat-button fxHide.lt-md routerLink="/admin/equipe">Equipe</a>
-        <a mat-button fxHide.lt-md routerLink="/admin/pacientes">Pacientes</a>
-        <span class="spacer"></span> 
-        <span style="margin-right: 10px;">Bem vindo(a)</span>
-        <div class="menu">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon svgIcon="woman" aria-hidden="false" aria-label="Woman Icon"></mat-icon>
-                <!-- <mat-icon svgIcon="man" aria-hidden="false" aria-label="Man Icon"></mat-icon> -->
+      <mat-toolbar-row>
+      <a mat-button fxHide.lt-md routerLink="/admin"> 
+          <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
+          <span id="titulo">Epineuro</span>
+      </a> 
+      <a mat-button fxHide fxShow.lt-md (click)="showExtendedNav()">
+          <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
+      </a>
+      <a mat-button fxHide.lt-md routerLink="/admin/sobre">Sobre o projeto</a>
+      <a mat-button fxHide.lt-md routerLink="/admin/equipe">Equipe</a>
+      <a mat-button fxHide.lt-md routerLink="/admin/pacientes">Pacientes</a>
+      <span class="spacer"></span> 
+      <span style="margin-right: 10px;">Bem vindo(a)</span>
+      <div class="menu">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon svgIcon="woman" aria-hidden="false" aria-label="Woman Icon"></mat-icon>
+              <!-- <mat-icon svgIcon="man" aria-hidden="false" aria-label="Man Icon"></mat-icon> -->
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>vpn_key</mat-icon>
+                <span>Alterar Senha</span>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>vpn_key</mat-icon>
-                  <span>Alterar Senha</span>
-                </button>
-                <button mat-menu-item (click)="logout()">
-                  <mat-icon>exit_to_app</mat-icon>
-                  <span>Sair</span>
-                </button>
-              </mat-menu>
-        </div>        
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Sair</span>
+              </button>
+            </mat-menu>
+      </div> 
+      </mat-toolbar-row>    
+      <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine">
+        <a mat-button routerLink="/admin/sobre" (click)="showExtendedNav()">Sobre o projeto</a>
+        <a mat-button routerLink="/admin/equipe" (click)="showExtendedNav()">Equipe</a>
+        <a mat-button routerLink="/admin/pacientes" (click)="showExtendedNav()">Pacientes</a>
+      </mat-toolbar-row> 
     </mat-toolbar>
-  
-    <mat-sidenav-container fxFlexFill>
-        <mat-sidenav #sidenav>
-          <mat-nav-list>
-            <a mat-list-item routerLink="/admin" (click)="sidenav.toggle()">Início</a>
-            <a mat-list-item routerLink="/admin/sobre" (click)="sidenav.toggle()">Sobre o projeto</a>
-            <a mat-list-item routerLink="/admin/equipe" (click)="sidenav.toggle()">Equipe</a>
-            <a mat-list-item routerLink="/admin/pacientes" (click)="sidenav.toggle()">Pacientes</a>
-          </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <main>
-                <router-outlet></router-outlet>
-            </main>
-            <footer>
-                <mat-toolbar class="footer">
-                    <span>Copyright &copy; Epineuro - 2020</span>
-                </mat-toolbar>
-            </footer>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+  </nav>
+  <div class="content">
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+  </div>
+  <footer>
+    <app-footer></app-footer>
+  </footer>
 </div>
+
 
 
 

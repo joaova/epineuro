@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   public isLoginUrl: boolean = false;
+  isNavExtended: boolean = false;
 
   ngOnInit(): void {
     if(this.router.url == "/login") {
@@ -39,6 +40,15 @@ export class HomeComponent implements OnInit {
         }
       }
     })
+  }
+
+  showExtendedNav() {
+    if (this.isNavExtended == false) {
+      this.isNavExtended = true;
+      return;
+    }
+
+    this.isNavExtended = false;
   }
 
 }

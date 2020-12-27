@@ -1,4 +1,4 @@
-<div class="layout">
+<!-- <div class="layout">
     <mat-toolbar class="header">
         <a mat-button fxHide.lt-md routerLink="/"> 
             <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
@@ -26,14 +26,51 @@
                 <router-outlet></router-outlet>
             </main>
             <footer>
-                <mat-toolbar class="footer">
-                    <span>Copyright &copy; Epineuro - 2020</span>
-                </mat-toolbar>
+                <app-footer></app-footer>
             </footer>
         </mat-sidenav-content>
     </mat-sidenav-container>
-</div>
-
+</div> -->
+<div class="layout">
+    <nav>
+      <mat-toolbar class="header">
+        <mat-toolbar-row>
+        <a mat-button fxHide.lt-md routerLink="/admin"> 
+            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
+            <span id="titulo">Epineuro</span>
+        </a> 
+        <a mat-button fxHide fxShow.lt-md (click)="showExtendedNav()">
+            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
+        </a>
+        <a mat-button fxHide.lt-md routerLink="/">Início</a>
+        <a mat-button fxHide.lt-md routerLink="/sobre">Sobre o projeto</a>
+        <a mat-button fxHide.lt-md routerLink="/equipe">Equipe</a>
+        <span class="spacer"></span> 
+        <a *ngIf="!isLoginUrl" class="login-btn"  mat-raised-button routerLink="/login">Login</a> 
+        </mat-toolbar-row>    
+        <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine">
+            <a mat-button routerLink="/" (click)="showExtendedNav()">Início</a>
+            <a mat-button routerLink="/sobre" (click)="showExtendedNav()">Sobre o projeto</a>
+            <a mat-button routerLink="/equipe" (click)="showExtendedNav()">Equipe</a>
+        </mat-toolbar-row> 
+      </mat-toolbar>
+    </nav>
+    <div class="content">
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+    </div>
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+  </div>
+  
+  
+  
+  
+  
+  
+  
 
 
 
