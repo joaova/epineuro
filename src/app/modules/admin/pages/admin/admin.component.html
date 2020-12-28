@@ -31,7 +31,7 @@
             </mat-menu>
       </div> 
       </mat-toolbar-row>    
-      <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine">
+      <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine" fxHide fxShow.lt-md>
         <a mat-button routerLink="/admin/sobre" (click)="showExtendedNav()">Sobre o projeto</a>
         <a mat-button routerLink="/admin/equipe" (click)="showExtendedNav()">Equipe</a>
         <a mat-button routerLink="/admin/pacientes" (click)="showExtendedNav()">Pacientes</a>

@@ -1,36 +1,3 @@
-<!-- <div class="layout">
-    <mat-toolbar class="header">
-        <a mat-button fxHide.lt-md routerLink="/"> 
-            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon"></mat-icon>
-            <span id="titulo">Epineuro</span>
-        </a> 
-        <a mat-button fxHide fxShow.lt-md (click)="sidenav.toggle()">
-            <mat-icon svgIcon="brain" aria-hidden="false" aria-label="Brain Icon">
-        </mat-icon></a>
-        <a mat-button fxHide.lt-md routerLink="/sobre">Sobre o projeto</a>
-        <a mat-button fxHide.lt-md routerLink="/equipe">Equipe</a>
-        <span class="spacer"></span> 
-        <a *ngIf="!isLoginUrl" class="login-btn"  mat-raised-button routerLink="/login">Login</a>
-    </mat-toolbar>
-  
-    <mat-sidenav-container fxFlexFill>
-        <mat-sidenav #sidenav>
-          <mat-nav-list>
-            <a mat-list-item routerLink="/" (click)="sidenav.toggle()">Início</a>
-            <a mat-list-item routerLink="/sobre" (click)="sidenav.toggle()">Sobre o projeto</a>
-            <a mat-list-item routerLink="/equipe" (click)="sidenav.toggle()">Equipe</a>
-          </mat-nav-list>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <main>
-                <router-outlet></router-outlet>
-            </main>
-            <footer>
-                <app-footer></app-footer>
-            </footer>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</div> -->
 <div class="layout">
     <nav>
       <mat-toolbar class="header">
@@ -48,7 +15,7 @@
         <span class="spacer"></span> 
         <a *ngIf="!isLoginUrl" class="login-btn"  mat-raised-button routerLink="/login">Login</a> 
         </mat-toolbar-row>    
-        <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine">
+        <mat-toolbar-row *ngIf="isNavExtended" class="secondNavLine" fxHide fxShow.lt-md>
             <a mat-button routerLink="/" (click)="showExtendedNav()">Início</a>
             <a mat-button routerLink="/sobre" (click)="showExtendedNav()">Sobre o projeto</a>
             <a mat-button routerLink="/equipe" (click)="showExtendedNav()">Equipe</a>
