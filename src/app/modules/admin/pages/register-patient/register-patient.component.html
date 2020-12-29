@@ -1,27 +1,74 @@
+<header>
+    <h1>Registrar Paciente</h1>
+</header>
+
 <form action="">
     <div class="container">
         <div class="row">
-            <mat-form-field class="example-full-width">
-                <input type="text"
-                    placeholder="CID-10"
-                    aria-label="Number"
-                    matInput
-                    [formControl]="myControl"
-                    [matAutocomplete]="auto"
-                    #termoDaPesquisa
-                    (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())">
-                <button mat-button *ngIf="termoDaPesquisa.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
-                    <mat-icon>close</mat-icon>
-                </button>
-                <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
-                  <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome">
-                    {{disease.codigo + ' ' + disease.nome}}
-                  </mat-option>
-                </mat-autocomplete>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>SAME</mat-label>
+                <input matInput>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Sexo</mat-label>
+                <mat-select>
+                  <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
+                    Masculino
+                  </mat-option> -->
+                </mat-select>
               </mat-form-field>
-              <button mat-button mat-icon-button (click)="addICD()" class="add-btn"><mat-icon>add</mat-icon></button>
         </div>
         <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Data de ascimento</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Estado de nascimento</mat-label>
+                <mat-select>
+                  <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Cidade de Nascimento</mat-label>
+                <mat-select>
+                    <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Cidade de Residência</mat-label>
+                <mat-select>
+                    <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="cid">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Doença neurológica e comorbidades</mat-label>
+                    <input type="text"
+                        aria-label="Number"
+                        matInput
+                        [formControl]="myControl"
+                        [matAutocomplete]="auto"
+                        #termoDaPesquisa
+                        (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())">
+                    <button mat-button *ngIf="termoDaPesquisa.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
+                      <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome" (click)="addICD()">
+                        {{disease.codigo + ' ' + disease.nome}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="row cid">
             <mat-list role="list">
                 <mat-list-item role="listitem" *ngFor="let cid of cids; index as i" #linkRef>
                     <span>{{cid}}</span>
@@ -30,6 +77,7 @@
                     </button>
                 </mat-list-item>
               </mat-list>
-        </div>   
+        </div> 
+        <button mat-raised-button class="form-btn">Avançar</button>
     </div>
 </form>
