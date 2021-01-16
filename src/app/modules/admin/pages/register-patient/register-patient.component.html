@@ -2,47 +2,49 @@
     <h1>Registrar Paciente</h1>
 </header>
 
-<form action="">
+<form [formGroup]="patientForm">
     <div class="container">
         <div class="row">
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>SAME</mat-label>
-                <input matInput>
+                <input matInput formControlName="SAME">
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Sexo</mat-label>
-                <mat-select>
-                  <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
-                    Masculino
-                  </mat-option> -->
+                <mat-select formControlName="gender" name="hi">
+                  <mat-option value=0>Feminino</mat-option>
+                  <mat-option value=1>Masculino</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill" class="half-width">
-                <mat-label>Data de ascimento</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <mat-label>Data de nascimento</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="birthDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Estado de nascimento</mat-label>
-                <mat-select>
-                  <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                <mat-select formControlName="birthState">
+                  <mat-option value="amapa">Banana</mat-option>
+                  <mat-option value="amazonas">Morango</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Nascimento</mat-label>
-                <mat-select>
-                    <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                <mat-select formControlName="birthCity">
+                    <mat-option value="amapa">Banana</mat-option>
+                    <mat-option value="amazonas">Morango</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Residência</mat-label>
-                <mat-select>
-                    <!-- <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option> -->
+                <mat-select formControlName="currentCity">
+                    <mat-option value="amapa">Banana</mat-option>
+                    <mat-option value="amazonas">Morango</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -53,10 +55,10 @@
                     <input type="text"
                         aria-label="Number"
                         matInput
-                        [formControl]="myControl"
                         [matAutocomplete]="auto"
                         #termoDaPesquisa
-                        (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())">
+                        (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())"
+                        formControlName="cid">
                     <button mat-button *ngIf="termoDaPesquisa.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -70,14 +72,21 @@
         </div>
         <div class="row cid">
             <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let cid of cids; index as i" #linkRef>
-                    <span>{{cid}}</span>
+                <mat-list-item role="listitem" *ngFor="let comorbitie of comorbities; index as i" #linkRef>
+                    <span>{{comorbitie}}</span>
                     <button class="item-btn" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeDisease(i)">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-list-item>
               </mat-list>
         </div> 
-        <button mat-raised-button class="form-btn">Avançar</button>
+        <button type="button" mat-raised-button class="form-btn" (click)="advance()">Avançar</button>
     </div>
 </form>
+{{patientForm.controls.SAME.value}}
+{{patientForm.controls.gender.value}}
+{{patientForm.controls.birthDate.value}}
+{{patientForm.controls.birthState.value}}
+{{patientForm.controls.birthCity.value}}
+{{patientForm.controls.currentCity.value}}
+{{patientForm.controls.cid.value}}

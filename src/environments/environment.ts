@@ -7,7 +7,8 @@ export const environment = {
   logRequest: true,
   traceRequest: true,
   URLSERVIDOR: 'http://localhost:8080/',
-  URLCIDAPI: 'https://cid10-api.herokuapp.com/cid10/'
+  URLCIDAPI: 'https://cid10-api.herokuapp.com/cid10/',
+  URLIBGEAPI: 'https://servicodados.ibge.gov.br/api/v1/localidades/'
 };
 
 /*

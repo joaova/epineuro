@@ -1,10 +1,13 @@
+import { FormDataService } from '../../../../services/form-data.service';
+import { PatientModel } from './../../../../core/model/PatientModel';
 import { environment } from './../../../../../environments/environment';
 import { DiseaseModel } from './../../../../core/model/disease-model';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, retry, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-patient',
@@ -13,15 +16,55 @@ import { FormControl } from '@angular/forms';
 })
 export class RegisterPatientComponent implements OnInit {
 
-  private subjectPesquisa: Subject<string> = new Subject<string>();
-  public diseaseObs: Observable<DiseaseModel>;
-  public disease: DiseaseModel = {codigo: '', nome: ''};
-  myControl = new FormControl();
-  public cids: string[] = [];
+  subjectPesquisa: Subject<string> = new Subject<string>();
+  diseaseObs: Observable<DiseaseModel>;
+  disease: DiseaseModel = {codigo: '', nome: ''};
+  comorbities: string[] = [];
+  patient: PatientModel = {
+    SAME: null,
+    gender: null,
+    birthDate: null,
+    birthState: null,
+    birthCity: null,
+    currentCity: null,
+    comorbities: null
+  }
 
-  constructor(private http: HttpClient) { }
+  patientForm = this.fb.group({
+    SAME: [''],
+    gender: [''],
+    birthDate: [''],
+    birthState: [''],
+    birthCity: [''],
+    currentCity: [''],
+    cid: ['']
+  })
+
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private fb: FormBuilder,
+    private patientDataService: FormDataService,
+  ) { }
 
   ngOnInit(): void {
+
+    this.patientDataService.currentMessagePessoa.subscribe((patient) => {
+      if (patient != '') {
+        this.patient = patient;
+        this.patientForm = this.fb.group({
+          SAME: [patient.SAME],
+          gender: [patient.gender],
+          birthDate: [patient.birthDate],
+          birthState: [patient.birthState],
+          birthCity: [patient.birthCity],
+          currentCity: [patient.currentCity],
+          cid: ['']
+        })
+        this.comorbities = patient.comorbities;
+      }
+    });
+
     this.diseaseObs = this.subjectPesquisa
       .pipe(
         debounceTime(1000),
@@ -51,16 +94,14 @@ export class RegisterPatientComponent implements OnInit {
 
   }
 
-  
-
   public pesquisa(termo: string): void {
     this.subjectPesquisa.next(termo);
 
   }
-
+  
   public addICD(): void {
     if(this.disease.codigo != '') {
-      this.cids.push(this.disease.codigo);
+      this.comorbities.push(this.disease.codigo);
       this.subjectPesquisa.next('');
       this.disease = {codigo: '', nome: ''};
     }  
@@ -69,13 +110,30 @@ export class RegisterPatientComponent implements OnInit {
   public clear(): void {
     this.subjectPesquisa.next('');
     this.disease = {codigo: '', nome: ''};
-    this.myControl.setValue('');
+    this.patientForm.controls.cid.setValue('');
   }
 
   public removeDisease(i: number): void {
 
-    this.cids.splice(i, 1);
+    this.comorbities.splice(i, 1);
    
   }
 
+  public advance(): void {
+    this.patient.SAME = this.patientForm.get('SAME').value;
+    this.patient.birthCity = this.patientForm.controls.birthCity.value;
+    this.patient.birthDate = this.patientForm.controls.birthDate.value;
+    this.patient.birthState = this.patientForm.controls.birthState.value;
+    this.patient.comorbities = this.comorbities;
+    this.patient.currentCity = this.patientForm.controls.currentCity.value;
+    this.patient.gender = this.patientForm.controls.gender.value;
+    this.patientDataService.changeMessage(this.patient);
+    this.router.navigateByUrl('/admin/cadastro-cefaleia');
+  }
+
 }
+
+
+// variables: 
+  // profissao
+  // 

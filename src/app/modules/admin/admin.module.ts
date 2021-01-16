@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { AdminComponent } from './pages/admin/admin.component';
 import { PatientsComponent } from './pages/patients/patients.component';
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
+import { RegisterPatientHeadacheComponent } from './pages/register-patient-headache/register-patient-headache.component';
 
 
 
 @NgModule({
-  declarations: [AdminComponent, PatientsComponent, RegisterPatientComponent],
+  declarations: [AdminComponent, PatientsComponent, RegisterPatientComponent, RegisterPatientHeadacheComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
