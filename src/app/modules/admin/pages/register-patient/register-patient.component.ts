@@ -1,4 +1,4 @@
-import { FormDataService } from '../../../../services/form-data.service';
+import { FormDataService } from '../../../../core/services/form-data.service';
 import { PatientModel } from './../../../../core/model/PatientModel';
 import { environment } from './../../../../../environments/environment';
 import { DiseaseModel } from './../../../../core/model/disease-model';
@@ -18,8 +18,8 @@ export class RegisterPatientComponent implements OnInit {
 
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
-  disease: DiseaseModel = {codigo: '', nome: ''};
-  comorbities: string[] = [];
+  disease: DiseaseModel = {cod: '', description: ''};
+  comorbities: DiseaseModel[] = [];
   patient: PatientModel = {
     SAME: null,
     gender: null,
@@ -100,23 +100,21 @@ export class RegisterPatientComponent implements OnInit {
   }
   
   public addICD(): void {
-    if(this.disease.codigo != '') {
-      this.comorbities.push(this.disease.codigo);
+    if(this.disease.cod != '') {
+      this.comorbities.push({cod: '', description: ''});
       this.subjectPesquisa.next('');
-      this.disease = {codigo: '', nome: ''};
+      this.disease = {cod: '', description: ''};
     }  
   }
 
   public clear(): void {
     this.subjectPesquisa.next('');
-    this.disease = {codigo: '', nome: ''};
+    this.disease = {cod: '', description: ''};
     this.patientForm.controls.cid.setValue('');
   }
 
   public removeDisease(i: number): void {
-
     this.comorbities.splice(i, 1);
-   
   }
 
   public advance(): void {
@@ -132,8 +130,3 @@ export class RegisterPatientComponent implements OnInit {
   }
 
 }
-
-
-// variables: 
-  // profissao
-  // 

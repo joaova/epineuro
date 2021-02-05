@@ -1,38 +1,58 @@
 <div class="container">
     <div class="tabela">
         <a mat-raised-button routerLink="/admin/cadastro"> Cadastrar Paciente </a>
-        <mat-form-field>
+        <!-- <mat-form-field>
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-          </mat-form-field>
+          </mat-form-field> -->
           
           <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
+            <table mat-table [dataSource]="dataSource">
           
               <!-- ID Column -->
               <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <th mat-header-cell *matHeaderCellDef> SAME </th>
                 <td mat-cell *matCellDef="let row"> {{row.id}} </td>
               </ng-container>
           
               <!-- Progress Column -->
-              <ng-container matColumnDef="progress">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+              <ng-container matColumnDef="gender">
+                <th mat-header-cell *matHeaderCellDef> Sexo </th>
+                <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
               </ng-container>
           
               <!-- Name Column -->
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+              <ng-container matColumnDef="birthDate">
+                <th mat-header-cell *matHeaderCellDef> Data Nascimento </th>
+                <td mat-cell *matCellDef="let row"> {{row.birthDate}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="birthState">
+                <th mat-header-cell *matHeaderCellDef> Estado Nascimento </th>
+                <td mat-cell *matCellDef="let row"> {{row.birthState}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="birthCity">
+                <th mat-header-cell *matHeaderCellDef> Cidade Nascimento </th>
+                <td mat-cell *matCellDef="let row"> {{row.birthCity}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="currentCity">
+                <th mat-header-cell *matHeaderCellDef> Cidade Atual </th>
+                <td mat-cell *matCellDef="let row"> {{row.currentCity}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comorbities">
+                <th mat-header-cell *matHeaderCellDef> Comorbidades </th>
+                <td mat-cell *matCellDef="let row"> {{row.comorbities}} </td>
               </ng-container>
           
               <!-- Color Column -->
-              <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+              <ng-container matColumnDef="Cidade Nascimento">
+                <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let row"> <a routerLink="/admin/cadastro" mat-raised-button><mat-icon>edit</mat-icon></a> </td>
               </ng-container>
-          
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           

@@ -63,8 +63,8 @@
                         <mat-icon>close</mat-icon>
                     </button>
                     <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
-                      <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome" (click)="addICD()">
-                        {{disease.codigo + ' ' + disease.nome}}
+                      <mat-option *ngIf="disease.cod != ''" [value]="disease.cod + ' ' + disease.description" (click)="addICD()">
+                        {{disease.cod + ' ' + disease.description}}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>

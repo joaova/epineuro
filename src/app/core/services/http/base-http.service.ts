@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { DefaultResponse } from './default-response';
 import { HttpService } from './http.services';
 import { Observable } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
