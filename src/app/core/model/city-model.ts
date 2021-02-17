@@ -1,4 +1,4 @@
-export interface CidadeModel {
+export interface City {
     id: number;
     nome: string;
-}
+} 

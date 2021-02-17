@@ -1,3 +1,6 @@
+import { State } from './../../../../core/model/state-model';
+import { LocationService } from './../../../../core/services/location.service';
+import { City } from './../../../../core/model/city-model';
 import { FormDataService } from '../../../../core/services/form-data.service';
 import { PatientModel } from './../../../../core/model/PatientModel';
 import { environment } from './../../../../../environments/environment';
@@ -18,8 +21,11 @@ export class RegisterPatientComponent implements OnInit {
 
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
-  disease: DiseaseModel = {cod: '', description: ''};
+  disease: DiseaseModel = {codigo: '', nome: ''};
   comorbities: DiseaseModel[] = [];
+  citiesRS: Observable<City[]>;
+  citiesByState: Observable<City[]>;
+  states: Observable<State[]>;
   patient: PatientModel = {
     SAME: null,
     gender: null,
@@ -45,10 +51,17 @@ export class RegisterPatientComponent implements OnInit {
     private router: Router, 
     private fb: FormBuilder,
     private patientDataService: FormDataService,
+    private locationService: LocationService
   ) { }
 
   ngOnInit(): void {
 
+    // testando api localidades
+    this.citiesRS = this.locationService.getCityRS();
+    this.states = this.locationService.getAllStates();
+
+    // verifica se o objeto esta vazio
+    // caso exista, preenche com os dados atuais
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
       if (patient != '') {
         this.patient = patient;
@@ -65,6 +78,7 @@ export class RegisterPatientComponent implements OnInit {
       }
     });
 
+    // pesquisa doenca pelo cid10
     this.diseaseObs = this.subjectPesquisa
       .pipe(
         debounceTime(1000),
@@ -79,7 +93,7 @@ export class RegisterPatientComponent implements OnInit {
             .pipe(
               retry(10),
               map((resposta: DiseaseModel) => resposta)
-            )
+            ) 
         }),
         catchError((erro: any) => {
           return of<DiseaseModel>();
@@ -100,21 +114,26 @@ export class RegisterPatientComponent implements OnInit {
   }
   
   public addICD(): void {
-    if(this.disease.cod != '') {
-      this.comorbities.push({cod: '', description: ''});
+    if(this.disease.codigo != '') {
+      this.comorbities.push({codigo: this.disease.codigo, nome: this.disease.nome});
       this.subjectPesquisa.next('');
-      this.disease = {cod: '', description: ''};
+      this.disease = {codigo: '', nome: ''};
     }  
   }
 
   public clear(): void {
     this.subjectPesquisa.next('');
-    this.disease = {cod: '', description: ''};
+    this.disease = {codigo: '', nome: ''};
     this.patientForm.controls.cid.setValue('');
   }
 
   public removeDisease(i: number): void {
     this.comorbities.splice(i, 1);
+  }
+
+  public loadCities() {
+    console.log(this.patientForm.controls.birthState.value);
+    this.citiesByState = this.locationService.getCityByState(this.patientForm.controls.birthState.value);
   }
 
   public advance(): void {
@@ -126,6 +145,7 @@ export class RegisterPatientComponent implements OnInit {
     this.patient.currentCity = this.patientForm.controls.currentCity.value;
     this.patient.gender = this.patientForm.controls.gender.value;
     this.patientDataService.changeMessage(this.patient);
+    // URL dinamica
     this.router.navigateByUrl('/admin/cadastro-cefaleia');
   }
 

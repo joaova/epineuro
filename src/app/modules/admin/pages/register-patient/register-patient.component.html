@@ -26,9 +26,8 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Estado de nascimento</mat-label>
-                <mat-select formControlName="birthState">
-                  <mat-option value="amapa">Banana</mat-option>
-                  <mat-option value="amazonas">Morango</mat-option>
+                <mat-select formControlName="birthState" (selectionChange)="loadCities()">
+                    <mat-option *ngFor="let state of states | async; index as i" value="{{state.sigla}}">{{state.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -36,15 +35,13 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Nascimento</mat-label>
                 <mat-select formControlName="birthCity">
-                    <mat-option value="amapa">Banana</mat-option>
-                    <mat-option value="amazonas">Morango</mat-option>
+                    <mat-option *ngFor="let city of citiesByState | async; index as i" value="{{city.id}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Residência</mat-label>
                 <mat-select formControlName="currentCity">
-                    <mat-option value="amapa">Banana</mat-option>
-                    <mat-option value="amazonas">Morango</mat-option>
+                    <mat-option *ngFor="let city of citiesRS | async; index as i" value="{{city.id}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -63,8 +60,8 @@
                         <mat-icon>close</mat-icon>
                     </button>
                     <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
-                      <mat-option *ngIf="disease.cod != ''" [value]="disease.cod + ' ' + disease.description" (click)="addICD()">
-                        {{disease.cod + ' ' + disease.description}}
+                      <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome" (click)="addICD()">
+                        {{disease.codigo + ' ' + disease.nome}}
                       </mat-option>
                     </mat-autocomplete>
                   </mat-form-field>
@@ -73,7 +70,7 @@
         <div class="row cid">
             <mat-list role="list">
                 <mat-list-item role="listitem" *ngFor="let comorbitie of comorbities; index as i" #linkRef>
-                    <span>{{comorbitie}}</span>
+                    <span>{{comorbitie.codigo}}</span>
                     <button class="item-btn" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeDisease(i)">
                         <mat-icon>close</mat-icon>
                     </button>

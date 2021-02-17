@@ -16,7 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     NoopAnimationsModule,
     HttpClientModule,
-  ],
+  ], 
   exports: [
     HttpClientModule,
   ],
