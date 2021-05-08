@@ -35,13 +35,13 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Nascimento</mat-label>
                 <mat-select formControlName="birthCity">
-                    <mat-option *ngFor="let city of citiesByState | async; index as i" value="{{city.id}}">{{city.nome}}</mat-option>
+                    <mat-option *ngFor="let city of citiesByState | async; index as i" value="{{city.nome}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Residência</mat-label>
                 <mat-select formControlName="currentCity">
-                    <mat-option *ngFor="let city of citiesRS | async; index as i" value="{{city.id}}">{{city.nome}}</mat-option>
+                    <mat-option *ngFor="let city of citiesRS | async; index as i" value="{{city.nome}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
