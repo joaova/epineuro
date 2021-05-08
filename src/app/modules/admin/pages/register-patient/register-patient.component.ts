@@ -27,7 +27,7 @@ export class RegisterPatientComponent implements OnInit {
   citiesByState: Observable<City[]>;
   states: Observable<State[]>;
   patient: PatientModel = {
-    SAME: null,
+    id: null,
     gender: null,
     birthDate: null,
     birthState: null,
@@ -37,7 +37,7 @@ export class RegisterPatientComponent implements OnInit {
   }
 
   patientForm = this.fb.group({
-    SAME: [''],
+    id: [''],
     gender: [''],
     birthDate: [''],
     birthState: [''],
@@ -66,7 +66,7 @@ export class RegisterPatientComponent implements OnInit {
       if (patient != '') {
         this.patient = patient;
         this.patientForm = this.fb.group({
-          SAME: [patient.SAME],
+          id: [patient.id],
           gender: [patient.gender],
           birthDate: [patient.birthDate],
           birthState: [patient.birthState],
@@ -137,7 +137,7 @@ export class RegisterPatientComponent implements OnInit {
   }
 
   public advance(): void {
-    this.patient.SAME = this.patientForm.get('SAME').value;
+    this.patient.id = this.patientForm.get('id').value;
     this.patient.birthCity = this.patientForm.controls.birthCity.value;
     this.patient.birthDate = this.patientForm.controls.birthDate.value;
     this.patient.birthState = this.patientForm.controls.birthState.value;

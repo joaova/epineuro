@@ -1,3 +1,4 @@
+import { HeadacheModel } from './../model/HeadacheModel';
 import { BaseHttpService } from './http/base-http.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -26,15 +27,15 @@ import { map } from 'rxjs/operators';
             .pipe(map(x => x.data));
     }
 
-    postPatient(param: PatientModel) {
+    postPatient(param: HeadacheModel) {
         return this.http
-            .post<PatientModel>(`${environment.URLSERVIDOR}patient`, param)
+            .post<HeadacheModel>(`${environment.URLSERVIDOR}headache`, param)
     }
 
     putPatient(param: PatientModel) {
         return this.http
             .put<void>(
-                `${environment.URLSERVIDOR}patient/${param.SAME}`,param
+                `${environment.URLSERVIDOR}patient/${param.id}`,param
             )
             .pipe(map((x) => x.data));
     }

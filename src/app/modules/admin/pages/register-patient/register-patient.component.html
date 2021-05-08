@@ -7,7 +7,7 @@
         <div class="row">
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>SAME</mat-label>
-                <input matInput formControlName="SAME">
+                <input matInput formControlName="id">
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Sexo</mat-label>
@@ -80,7 +80,7 @@
         <button type="button" mat-raised-button class="form-btn" (click)="advance()">Avançar</button>
     </div>
 </form>
-{{patientForm.controls.SAME.value}}
+{{patientForm.controls.id.value}}
 {{patientForm.controls.gender.value}}
 {{patientForm.controls.birthDate.value}}
 {{patientForm.controls.birthState.value}}
