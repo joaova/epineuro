@@ -1,8 +1,8 @@
-import { HeadacheModel } from './../Model/HeadacheModel';
+import { HeadacheModel } from './../model/HeadacheModel';
+import { PatientDTO } from './../model/PatientDTO';
 import { BaseHttpService } from './http/base-http.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { PatientDTO } from './../Model/PatientDTO';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
