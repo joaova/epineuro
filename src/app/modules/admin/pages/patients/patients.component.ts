@@ -1,6 +1,6 @@
-import { PatientDataSource } from './../../../../core/data-sources/patient-data-source';
-import { PatientService } from './../../../../core/services/patient-service';
-import { PatientModel } from './../../../../core/model/PatientModel';
+import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
+import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
+import { PatientDTO } from './../../../../core/model/PatientDTO';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,20 +11,33 @@ import { Observable } from 'rxjs';
 })
 export class PatientsComponent implements OnInit {
 
-  patients: Observable<PatientModel[]>;
+  patients: Observable<PatientDTO[]>;
 
-  displayedColumns: string[] = ['id', 'gender', 'birthDate', 'birthState', 'birthCity', 'currentCity', 'comorbities'];
-  dataSource: PatientDataSource;
+  displayedColumns: string[] = ['id', 'gender', 'currentCity','age', 'mainDisease'];
+  dataSource: PatientDataSourceDTO;
 
   constructor(
-    private service: PatientService
+    private service: PatientServiceDTO
   ) {}
 
  
   ngOnInit(): void {
     // Assign the data to the data source for the table to render
-    this.dataSource = new PatientDataSource(this.service);
+    this.dataSource = new PatientDataSourceDTO(this.service);
     this.dataSource.loadPatients();
+  }
+
+  public getSexo(cod: number): string {
+
+    if(cod == 0) {
+        return 'Feminino';
+    }
+
+    if(cod == 1) {
+        return 'Masculino';
+    }
+
+    return null;
   }
 
 }

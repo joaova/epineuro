@@ -132,7 +132,6 @@ export class RegisterPatientComponent implements OnInit {
   }
 
   public loadCities() {
-    console.log(this.patientForm.controls.birthState.value);
     this.citiesByState = this.locationService.getCityByState(this.patientForm.controls.birthState.value);
   }
 

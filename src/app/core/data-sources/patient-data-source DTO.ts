@@ -1,19 +1,19 @@
-import { PatientService } from './../services/patient-service';
-import { PatientModel } from './../model/PatientModel';
+import { PatientServiceDTO } from './../services/patient-service DTO';
+import { PatientDTO } from './../model/PatientDTO';
 import { DataSource } from "@angular/cdk/table";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CollectionViewer } from '@angular/cdk/collections';
 
-export class PatientDataSource implements DataSource<PatientModel> {
+export class PatientDataSourceDTO implements DataSource<PatientDTO> {
 
-    private patientSubject = new BehaviorSubject<PatientModel[]>([]);
+    private patientSubject = new BehaviorSubject<PatientDTO[]>([]);
     private loadingSubject = new BehaviorSubject<boolean>(false);
 
     constructor(
-        private service: PatientService
+        private service: PatientServiceDTO
     ) {}
 
-    connect(collectionViewer: CollectionViewer): Observable<PatientModel[]> {
+    connect(collectionViewer: CollectionViewer): Observable<PatientDTO[]> {
         return this.patientSubject.asObservable();
     }
  
