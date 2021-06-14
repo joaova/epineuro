@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class PatientsComponent implements OnInit {
 
-  patients: Observable<PatientDTO[]>;
+  totalPatients: number;
 
   displayedColumns: string[] = ['id', 'gender', 'currentCity','age', 'mainDisease'];
   dataSource: PatientDataSourceDTO;
@@ -25,6 +25,7 @@ export class PatientsComponent implements OnInit {
     // Assign the data to the data source for the table to render
     this.dataSource = new PatientDataSourceDTO(this.service);
     this.dataSource.loadPatients();
+    this.countPatients();
   }
 
   public getSexo(cod: number): string {
@@ -38,6 +39,12 @@ export class PatientsComponent implements OnInit {
     }
 
     return null;
+  }
+
+  countPatients(): any{
+    this.service.getAllpatients().subscribe(result => {
+      this.totalPatients = result.length
+    });
   }
 
 }

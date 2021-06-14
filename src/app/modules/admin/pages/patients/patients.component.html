@@ -6,7 +6,7 @@
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
           </mat-form-field> -->
           
-          <div class="mat-elevation-z8">
+          <div *ngIf="totalPatients > 0" class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource">
           
               <!-- ID Column -->
@@ -57,5 +57,6 @@
           </div>
     </div>
 </div>
+
 
   
