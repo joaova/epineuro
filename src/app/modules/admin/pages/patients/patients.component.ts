@@ -13,7 +13,7 @@ export class PatientsComponent implements OnInit {
 
   totalPatients: number;
 
-  displayedColumns: string[] = ['id', 'gender', 'currentCity','age', 'mainDisease'];
+  displayedColumns: string[] = ['id', 'gender','age', 'mainDisease', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
 
   constructor(

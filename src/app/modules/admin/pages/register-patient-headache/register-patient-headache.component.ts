@@ -38,7 +38,7 @@ export class RegisterPatientHeadacheComponent implements OnInit {
     this.headachePatient.painPattern = this.headacheForm.controls.painPattern.value;
     console.log(this.headachePatient);
     this.service.postPatient(this.headachePatient).subscribe(resposta => resposta);
-    // this.router.navigateByUrl('/admin/pacientes');
+    //this.router.navigateByUrl('/admin/pacientes');
   }
 
 }
