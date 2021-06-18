@@ -1,8 +1,8 @@
 import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
 import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
-import { PatientDTO } from './../../../../core/model/PatientDTO';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PatientService } from 'src/app/core/services/patient-service';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-patients',
@@ -11,13 +11,16 @@ import { Observable } from 'rxjs';
 })
 export class PatientsComponent implements OnInit {
 
+
+  // @ViewChild(MatTable) table: MatTable<any>;
   totalPatients: number;
 
   displayedColumns: string[] = ['id', 'gender','age', 'mainDisease', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
 
   constructor(
-    private service: PatientServiceDTO
+    private service: PatientServiceDTO,
+    private pService: PatientService
   ) {}
 
  
@@ -46,6 +49,11 @@ export class PatientsComponent implements OnInit {
       this.totalPatients = result.length
     });
   }
+
+  // deletePatient(id: number) {
+  //   this.pService.deletePatient(id).subscribe(result => console.log(result));
+  //   this.table.renderRows();
+  // }
 
 }
 
