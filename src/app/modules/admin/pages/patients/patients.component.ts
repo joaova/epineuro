@@ -1,9 +1,11 @@
+import { PatientInfoComponent } from './../patient-info/patient-info.component';
 import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
 import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PatientService } from 'src/app/core/services/patient-service';
 import { MatTable } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-patients',
@@ -22,7 +24,8 @@ export class PatientsComponent implements OnInit {
   constructor(
     private service: PatientServiceDTO,
     private pService: PatientService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
  
@@ -65,6 +68,14 @@ export class PatientsComponent implements OnInit {
       this.dataSource.loadPatients();
     });
 
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(PatientInfoComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

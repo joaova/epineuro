@@ -18,6 +18,7 @@ import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -45,7 +46,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatTableModule,
     MatPaginatorModule,
     MatAutocompleteModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
   ],
   exports: [
     MatToolbarModule,
@@ -69,7 +71,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     MatPaginatorModule,
     MatAutocompleteModule,
     MatSnackBarModule,
-    FooterComponent
+    FooterComponent,
+    MatDialogModule
   ]
 })
 
