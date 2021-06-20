@@ -3,6 +3,7 @@ import { PatientServiceDTO } from './../../../../core/services/patient-service D
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PatientService } from 'src/app/core/services/patient-service';
 import { MatTable } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patients',
@@ -12,7 +13,7 @@ import { MatTable } from '@angular/material/table';
 export class PatientsComponent implements OnInit {
 
 
-  // @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<any>;
   totalPatients: number;
 
   displayedColumns: string[] = ['id', 'gender','age', 'mainDisease', 'info', 'edit', 'delete'];
@@ -20,7 +21,8 @@ export class PatientsComponent implements OnInit {
 
   constructor(
     private service: PatientServiceDTO,
-    private pService: PatientService
+    private pService: PatientService,
+    private snackBar: MatSnackBar
   ) {}
 
  
@@ -29,6 +31,11 @@ export class PatientsComponent implements OnInit {
     this.dataSource = new PatientDataSourceDTO(this.service);
     this.dataSource.loadPatients();
     this.countPatients();
+  }
+
+  
+  openSnackBar() {
+     this.snackBar.open("Paciente deletado com sucesso!", "X",  {duration: 5 * 1000});
   }
 
   public getSexo(cod: number): string {
@@ -50,10 +57,15 @@ export class PatientsComponent implements OnInit {
     });
   }
 
-  // deletePatient(id: number) {
-  //   this.pService.deletePatient(id).subscribe(result => console.log(result));
-  //   this.table.renderRows();
-  // }
+  deletePatient(id: number) {
+    this.pService.deletePatient(id).subscribe(result => {
+      console.log(result);
+      this.openSnackBar();
+      this.countPatients();
+      this.dataSource.loadPatients();
+    });
+
+  }
 
 }
 

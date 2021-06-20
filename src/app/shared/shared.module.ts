@@ -17,6 +17,8 @@ import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FooterComponent } from './components/footer/footer.component';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatTableModule,
     MatPaginatorModule,
     MatAutocompleteModule,
+    MatSnackBarModule
   ],
   exports: [
     MatToolbarModule,
@@ -65,6 +68,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MatTableModule,
     MatPaginatorModule,
     MatAutocompleteModule,
+    MatSnackBarModule,
     FooterComponent
   ]
 })
