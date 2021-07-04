@@ -19,11 +19,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HeadacheInfoComponent } from './headache-info/headache-info.component';
 
 
 
 @NgModule({
-  declarations: [FooterComponent],
+  declarations: [FooterComponent, HeadacheInfoComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -72,7 +73,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatAutocompleteModule,
     MatSnackBarModule,
     FooterComponent,
-    MatDialogModule
+    MatDialogModule,
+    HeadacheInfoComponent
   ]
 })
 

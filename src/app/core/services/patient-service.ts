@@ -27,11 +27,6 @@ import { map } from 'rxjs/operators';
             .pipe(map(x => x.data));
     }
 
-    postPatient(param: HeadacheModel) {
-        return this.http
-            .post<HeadacheModel>(`${environment.URLSERVIDOR}headache`, param)
-    }
-
     putPatient(param: PatientModel) {
         return this.http
             .put<void>(

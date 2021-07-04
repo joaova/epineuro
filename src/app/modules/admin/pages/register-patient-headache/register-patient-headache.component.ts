@@ -1,3 +1,4 @@
+import { HeadacheService } from './../../../../core/services/headache.service';
 import { PatientService } from './../../../../core/services/patient-service';
 import { HeadacheModel } from './../../../../core/model/HeadacheModel';
 import { FormDataService } from '../../../../core/services/form-data.service';
@@ -21,7 +22,7 @@ export class RegisterPatientHeadacheComponent implements OnInit {
     private fb: FormBuilder,
     private patientDataService: FormDataService,
     private router: Router,
-    private service: PatientService
+    private service: HeadacheService
   ) { }
 
   ngOnInit(): void {
@@ -37,8 +38,10 @@ export class RegisterPatientHeadacheComponent implements OnInit {
   register(): void {
     this.headachePatient.painPattern = this.headacheForm.controls.painPattern.value;
     console.log(this.headachePatient);
-    this.service.postPatient(this.headachePatient).subscribe(resposta => resposta);
-    //this.router.navigateByUrl('/admin/pacientes');
+    this.service.postPatient(this.headachePatient).subscribe(resposta => {
+      console.log(resposta);
+      this.router.navigateByUrl('/admin/pacientes');
+    });
   }
 
 }
