@@ -1,3 +1,8 @@
+import { HeadacheModel } from './../../../../core/model/HeadacheModel';
+import { PatientModel } from './../../../../core/model/PatientModel';
+import { Router } from '@angular/router';
+import { HeadacheService } from './../../../../core/services/headache.service';
+import { FormDataService } from './../../../../core/services/form-data.service';
 import { PatientInfoComponent } from './../patient-info/patient-info.component';
 import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
 import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
@@ -20,12 +25,16 @@ export class PatientsComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'gender','age', 'mainDisease', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
+  p1: HeadacheModel;
 
   constructor(
     private service: PatientServiceDTO,
+    private router: Router,
     private pService: PatientService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private patientDataService: FormDataService,
+    private hService: HeadacheService
   ) {}
 
  
@@ -68,6 +77,18 @@ export class PatientsComponent implements OnInit {
       this.dataSource.loadPatients();
     });
 
+  }
+
+  editPatient(id: number) {
+    this.hService.getPatientById(id)
+    .subscribe(result => {
+      this.p1 = result;
+    },
+    (err) => (console.log("Deu ruim")),
+    () => {
+      this.patientDataService.changeMessage(this.p1);  
+      this.router.navigateByUrl('/admin/cadastro'); 
+    });   
   }
 
   openDialog() {

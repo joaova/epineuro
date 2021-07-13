@@ -26,6 +26,7 @@ export class RegisterPatientComponent implements OnInit {
   citiesRS: Observable<City[]>;
   citiesByState: Observable<City[]>;
   states: Observable<State[]>;
+  patientVerification: number = 0;
   patient: PatientModel = {
     id: null,
     gender: null,
@@ -60,21 +61,27 @@ export class RegisterPatientComponent implements OnInit {
     this.citiesRS = this.locationService.getCityRS();
     this.states = this.locationService.getAllStates();
 
+    console.log('hi');
+
     // verifica se o objeto esta vazio
     // caso exista, preenche com os dados atuais
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
       if (patient != '') {
         this.patient = patient;
+        this.patientVerification = 1;
+        console.log(this.patient);
         this.patientForm = this.fb.group({
-          id: [patient.id],
-          gender: [patient.gender],
-          birthDate: [patient.birthDate],
-          birthState: [patient.birthState],
-          birthCity: [patient.birthCity],
-          currentCity: [patient.currentCity],
+          id: [this.patient.id],
+          gender: [this.patient.gender],
+          birthDate: [this.patient.birthDate],
+          birthState: [this.patient.birthState],
+          birthCity: [this.patient.birthCity],
+          currentCity: [this.patient.currentCity],
           cid: ['']
         })
-        this.comorbities = patient.comorbities;
+        this.loadCities();
+        console.log(this.patient, 'hi');
+        this.comorbities = this.patient.comorbities;
       }
     });
 
@@ -143,7 +150,11 @@ export class RegisterPatientComponent implements OnInit {
     this.patient.comorbities = this.comorbities;
     this.patient.currentCity = this.patientForm.controls.currentCity.value;
     this.patient.gender = this.patientForm.controls.gender.value;
-    this.patientDataService.changeMessage(this.patient);
+
+    if(this.patientVerification == 0) {
+      this.patientDataService.changeMessage(this.patient);
+    }
+    console.log(this.patientVerification);
     // URL dinamica
     this.router.navigateByUrl('/admin/cadastro-cefaleia');
   }

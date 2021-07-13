@@ -41,7 +41,7 @@
               <!-- Color Column -->
               <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let row"> <a routerLink="/admin/cadastro" mat-raised-button><mat-icon>edit</mat-icon></a> </td>
+                <td mat-cell *matCellDef="let row"> <a (click)="editPatient(row.id)" mat-raised-button><mat-icon>edit</mat-icon></a> </td>
               </ng-container>
 
               <ng-container matColumnDef="delete">

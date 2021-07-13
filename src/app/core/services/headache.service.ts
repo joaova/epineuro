@@ -15,7 +15,7 @@ export class HeadacheService{
 
   getPatientById(id: number): Observable<HeadacheModel> {
     return this.http
-        .getAll<HeadacheModel>(`${environment.URLSERVIDOR}patient/${id}`)
+        .getAll<HeadacheModel>(`${environment.URLSERVIDOR}headache/${id}`)
         .pipe(map(x => x.data));
   }
 

@@ -27,7 +27,11 @@ export class RegisterPatientHeadacheComponent implements OnInit {
 
   ngOnInit(): void {
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
+        console.log(patient);
         this.headachePatient = patient;
+        this.headacheForm = this.fb.group({
+          painPattern: [this.headachePatient.painPattern]
+        })
     });
   }
 

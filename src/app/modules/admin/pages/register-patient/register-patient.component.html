@@ -12,8 +12,8 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Sexo</mat-label>
                 <mat-select formControlName="gender" name="hi">
-                  <mat-option value=0>Feminino</mat-option>
-                  <mat-option value=1>Masculino</mat-option>
+                  <mat-option [value]=0>Feminino</mat-option>
+                  <mat-option [value]=1>Masculino</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>
@@ -87,3 +87,4 @@
 {{patientForm.controls.birthCity.value}}
 {{patientForm.controls.currentCity.value}}
 {{patientForm.controls.cid.value}}
+ 
