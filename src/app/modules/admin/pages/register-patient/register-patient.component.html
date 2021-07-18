@@ -46,6 +46,20 @@
             </mat-form-field>
         </div>
         <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Sei la</mat-label>
+                <mat-select formControlName="">
+                    <mat-option></mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Grupo de Doença</mat-label>
+                <mat-select formControlName="diseaseGroup">
+                    <mat-option *ngFor="let disease of diseaseGroupList;" value="{{disease}}">{{disease}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
             <div class="cid">
                 <mat-form-field appearance="fill" class="full-width">
                     <mat-label>Doença neurológica e comorbidades</mat-label>
@@ -86,5 +100,6 @@
 {{patientForm.controls.birthState.value}}
 {{patientForm.controls.birthCity.value}}
 {{patientForm.controls.currentCity.value}}
+{{patientForm.controls.diseaseGroup.value}}
 {{patientForm.controls.cid.value}}
  

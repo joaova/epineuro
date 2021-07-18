@@ -91,6 +91,10 @@ export class PatientsComponent implements OnInit {
     });   
   }
 
+  eraseCurrentPatient() {
+    this.patientDataService.changeMessage("");
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(PatientInfoComponent);
 

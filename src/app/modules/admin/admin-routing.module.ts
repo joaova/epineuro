@@ -18,7 +18,7 @@ const routes: Routes = [
         {path: 'sobre', component: AboutComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
         {path: 'equipe', component: TeamComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
         {path: 'cadastro', component: RegisterPatientComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
-        {path: 'cadastro-cefaleia', component: RegisterPatientHeadacheComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }}
+        {path: 'cadastro-0', component: RegisterPatientHeadacheComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }}
       ]
     }
 ];

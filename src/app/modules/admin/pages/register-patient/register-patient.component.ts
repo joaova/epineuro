@@ -1,3 +1,4 @@
+import { DiseaseGroup } from './../../../../core/enums/DiseaseGroup';
 import { State } from './../../../../core/model/state-model';
 import { LocationService } from './../../../../core/services/location.service';
 import { City } from './../../../../core/model/city-model';
@@ -27,6 +28,8 @@ export class RegisterPatientComponent implements OnInit {
   citiesByState: Observable<City[]>;
   states: Observable<State[]>;
   patientVerification: number = 0;
+  diseaseGroupList: String[] = ["Cefaleia", "Distúrbios do Movimento", 
+  "Epilepsia", "Demências", "Doenças Cerebrovasculares", "Doenças Neuromusculares"];
   patient: PatientModel = {
     id: null,
     gender: null,
@@ -34,6 +37,7 @@ export class RegisterPatientComponent implements OnInit {
     birthState: null,
     birthCity: null,
     currentCity: null,
+    diseaseGroup: null,
     comorbities: null
   }
 
@@ -44,6 +48,7 @@ export class RegisterPatientComponent implements OnInit {
     birthState: [''],
     birthCity: [''],
     currentCity: [''],
+    diseaseGroup: [''],
     cid: ['']
   })
 
@@ -77,6 +82,7 @@ export class RegisterPatientComponent implements OnInit {
           birthState: [this.patient.birthState],
           birthCity: [this.patient.birthCity],
           currentCity: [this.patient.currentCity],
+          diseaseGroup: [this.diseaseGroupList[this.patient.diseaseGroup]],
           cid: ['']
         })
         this.loadCities();
@@ -150,13 +156,14 @@ export class RegisterPatientComponent implements OnInit {
     this.patient.comorbities = this.comorbities;
     this.patient.currentCity = this.patientForm.controls.currentCity.value;
     this.patient.gender = this.patientForm.controls.gender.value;
+    this.patient.diseaseGroup = this.diseaseGroupList.indexOf(this.patientForm.controls.diseaseGroup.value);
 
     if(this.patientVerification == 0) {
       this.patientDataService.changeMessage(this.patient);
     }
     console.log(this.patientVerification);
     // URL dinamica
-    this.router.navigateByUrl('/admin/cadastro-cefaleia');
+    this.router.navigateByUrl(`/admin/cadastro-${this.patient.diseaseGroup}`);
   }
 
 }

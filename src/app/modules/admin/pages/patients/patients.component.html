@@ -1,6 +1,6 @@
 <div class="container">
     <div class="tabela">
-        <a mat-raised-button routerLink="/admin/cadastro"> Cadastrar Paciente </a>
+        <a mat-raised-button routerLink="/admin/cadastro" (click)="eraseCurrentPatient()"> Cadastrar Paciente </a>
         <!-- <mat-form-field>
             <mat-label>Filter</mat-label>
             <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
