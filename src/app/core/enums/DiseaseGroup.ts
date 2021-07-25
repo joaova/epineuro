@@ -7,7 +7,7 @@ export enum DiseaseGroup {
     NEUROMUSCULAR_DISEASE   
 }
 
-function getDiseaseGroup(cod: number) {
+export function getDiseaseGroup(cod: number) {
 
     let enumList: String[] = ["Cefaleia", "Distúrbios do Movimento", 
     "Epilepsia", "Demências", "Doenças Cerebrovasculares", "Doenças Neuromusculares"];

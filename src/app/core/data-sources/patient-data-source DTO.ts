@@ -31,4 +31,14 @@ export class PatientDataSourceDTO implements DataSource<PatientDTO> {
 
     } 
 
+    loadPatientsBySame(id: number) {
+        this.loadingSubject.next(true);
+        this.service.getPatientById(id)
+            .subscribe(patients => {
+                let pDTO: PatientDTO[] = [];
+                pDTO.push(patients);
+                this.patientSubject.next(pDTO);
+            });
+    }
+
 }

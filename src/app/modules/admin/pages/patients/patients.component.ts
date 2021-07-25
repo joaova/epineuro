@@ -1,3 +1,4 @@
+import { DiseaseGroup, getDiseaseGroup } from './../../../../core/enums/DiseaseGroup';
 import { HeadacheModel } from './../../../../core/model/HeadacheModel';
 import { PatientModel } from './../../../../core/model/PatientModel';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ export class PatientsComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   totalPatients: number;
 
-  displayedColumns: string[] = ['id', 'gender','age', 'mainDisease', 'info', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'gender','age', 'diseaseGroup', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
   p1: HeadacheModel;
 
@@ -95,12 +96,23 @@ export class PatientsComponent implements OnInit {
     this.patientDataService.changeMessage("");
   }
 
+  searchPatient(same: number) {
+    console.log(same);
+    this.dataSource = new PatientDataSourceDTO(this.service);
+    this.dataSource.loadPatientsBySame(same);
+    this.countPatients();
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(PatientInfoComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  getDG(n: number): String {
+    return getDiseaseGroup(n);    
   }
 
 }
