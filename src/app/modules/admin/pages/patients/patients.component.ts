@@ -1,6 +1,5 @@
-import { DiseaseGroup, getDiseaseGroup } from './../../../../core/enums/DiseaseGroup';
+import { getDiseaseGroup } from './../../../../core/enums/DiseaseGroup';
 import { HeadacheModel } from './../../../../core/model/HeadacheModel';
-import { PatientModel } from './../../../../core/model/PatientModel';
 import { Router } from '@angular/router';
 import { HeadacheService } from './../../../../core/services/headache.service';
 import { FormDataService } from './../../../../core/services/form-data.service';
@@ -9,10 +8,8 @@ import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-da
 import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PatientService } from 'src/app/core/services/patient-service';
-import { MatTable } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-patients',
@@ -21,9 +18,6 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class PatientsComponent implements OnInit {
 
-
-  // @ViewChild(MatTable) table: MatTable<any>;
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
   totalPatients: number;
   selectedValue: number = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -48,17 +42,6 @@ export class PatientsComponent implements OnInit {
     this.dataSource.loadPatients(this.selectedValue);
     this.countPatients();
   }
-
-
-  //// implementar se nao der certo
-  // ngAfterViewInit() {
-  //   this.paginator.page.subscribe(resposta => {
-  //     this.dataSource.loadPatients(resposta.pageSize);
-  //     console.log(this.paginator);
-  //     console.log(this.totalPatients);
-  //     this.paginator.length = this.totalPatients;
-  //   });
-  //}
 
   reloadPagination() {
     this.dataSource.loadPatients(this.selectedValue);
