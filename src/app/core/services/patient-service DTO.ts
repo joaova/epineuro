@@ -21,6 +21,12 @@ import { map } from 'rxjs/operators';
             .pipe(map(x => x.data));
     }
 
+    getAllpatientsByPag(n: number): Observable<PatientDTO[]> {
+        return this.http
+            .getAll<PatientDTO[]>(`${environment.URLSERVIDOR}patient/pagination/${n}`)
+            .pipe(map(x => x.data));
+    }
+
     getAllpatients(): Observable<PatientDTO[]> {
         return this.http
             .getAll<PatientDTO[]>(`${environment.URLSERVIDOR}patient`)

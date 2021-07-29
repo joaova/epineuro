@@ -16,7 +16,7 @@ table {
     width: 100%;
 }
 
-a, button {
+.blueButtons {
     margin: 16px 8px;
     background-color: #3f51b5;
     color: #fafafa;
@@ -26,7 +26,21 @@ a, button {
     font-size: 14px;
     width: 100%;
 }
-  
+
+#paginator-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#pageIndex {
+    width: 50px;
+}
+
+#pagination-icons {
+    color: grey;
+}
+
 /* td, th {
     width: 25%;
 } */

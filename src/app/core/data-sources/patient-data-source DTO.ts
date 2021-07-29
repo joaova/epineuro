@@ -22,11 +22,11 @@ export class PatientDataSourceDTO implements DataSource<PatientDTO> {
         this.loadingSubject.complete();
     }
 
-    loadPatients() {
+    loadPatients(n: number) {
 
         this.loadingSubject.next(true);
 
-        this.service.getAllpatients()
+        this.service.getAllpatientsByPag(n)
             .subscribe(patients => this.patientSubject.next(patients));
 
     } 

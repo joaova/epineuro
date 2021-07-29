@@ -12,6 +12,7 @@ import { PatientService } from 'src/app/core/services/patient-service';
 import { MatTable } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-patients',
@@ -21,9 +22,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class PatientsComponent implements OnInit {
 
 
-  @ViewChild(MatTable) table: MatTable<any>;
+  // @ViewChild(MatTable) table: MatTable<any>;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
   totalPatients: number;
-
+  selectedValue: number = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
   displayedColumns: string[] = ['id', 'gender','age', 'diseaseGroup', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
   p1: HeadacheModel;
@@ -42,11 +45,25 @@ export class PatientsComponent implements OnInit {
   ngOnInit(): void {
     // Assign the data to the data source for the table to render
     this.dataSource = new PatientDataSourceDTO(this.service);
-    this.dataSource.loadPatients();
+    this.dataSource.loadPatients(this.selectedValue);
     this.countPatients();
   }
 
-  
+
+  //// implementar se nao der certo
+  // ngAfterViewInit() {
+  //   this.paginator.page.subscribe(resposta => {
+  //     this.dataSource.loadPatients(resposta.pageSize);
+  //     console.log(this.paginator);
+  //     console.log(this.totalPatients);
+  //     this.paginator.length = this.totalPatients;
+  //   });
+  //}
+
+  reloadPagination() {
+    this.dataSource.loadPatients(this.selectedValue);
+  }
+
   openSnackBar() {
      this.snackBar.open("Paciente deletado com sucesso!", "X",  {duration: 5 * 1000});
   }
@@ -64,9 +81,9 @@ export class PatientsComponent implements OnInit {
     return null;
   }
 
-  countPatients(): any{
+  countPatients(): void{
     this.service.getAllpatients().subscribe(result => {
-      this.totalPatients = result.length
+      this.totalPatients = result.length;
     });
   }
 
@@ -75,7 +92,7 @@ export class PatientsComponent implements OnInit {
       console.log(result);
       this.openSnackBar();
       this.countPatients();
-      this.dataSource.loadPatients();
+      this.dataSource.loadPatients(this.selectedValue);
     });
 
   }
@@ -91,7 +108,7 @@ export class PatientsComponent implements OnInit {
       this.router.navigateByUrl('/admin/cadastro'); 
     });   
   }
-
+ 
   eraseCurrentPatient() {
     this.patientDataService.changeMessage("");
   }
