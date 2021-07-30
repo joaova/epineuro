@@ -19,11 +19,17 @@ import { MatDialog } from '@angular/material/dialog';
 export class PatientsComponent implements OnInit {
 
   totalPatients: number;
-  selectedValue: number = 5;
+  patientsInCurrentPage: number;
+  patientCount: number = 0;
+  currentPageSize: number = 5;
+  currentPage: number = 0;
+  add: boolean = true;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   displayedColumns: string[] = ['id', 'gender','age', 'diseaseGroup', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
   p1: HeadacheModel;
+  isNextAv: boolean;
+  isPreviousAv: boolean;
 
   constructor(
     private service: PatientServiceDTO,
@@ -39,12 +45,15 @@ export class PatientsComponent implements OnInit {
   ngOnInit(): void {
     // Assign the data to the data source for the table to render
     this.dataSource = new PatientDataSourceDTO(this.service);
-    this.dataSource.loadPatients(this.selectedValue);
+    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
     this.countPatients();
+    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
   }
 
   reloadPagination() {
-    this.dataSource.loadPatients(this.selectedValue);
+    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
+    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
+    this.updateCondition();
   }
 
   openSnackBar() {
@@ -65,9 +74,29 @@ export class PatientsComponent implements OnInit {
   }
 
   countPatients(): void{
-    this.service.getAllpatients().subscribe(result => {
-      this.totalPatients = result.length;
-    });
+    this.service.getAllpatients().subscribe(result => 
+      {this.totalPatients = result.length;},
+      (err) => console.log("Deu erro"),
+      () => console.log("Terminou de contar") 
+    );
+  }
+
+  countPatientsInCurrentPage(page: number, pageSize: number, add: boolean): void {
+    this.service.getAllpatientsByPag(page, pageSize).subscribe(result => 
+      {
+        if(!add) {
+          this.patientCount = this.patientCount - this.patientsInCurrentPage;
+        }
+        this.patientsInCurrentPage = result.length
+      },
+      (err) => console.log("Deu erro"),
+      () => {
+        if (add) {
+          this.patientCount = this.patientCount + this.patientsInCurrentPage;
+        } 
+        this.updateCondition();
+      }
+    );
   }
 
   deletePatient(id: number) {
@@ -75,7 +104,8 @@ export class PatientsComponent implements OnInit {
       console.log(result);
       this.openSnackBar();
       this.countPatients();
-      this.dataSource.loadPatients(this.selectedValue);
+      this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
+      this.updateCondition();
     });
 
   }
@@ -115,6 +145,44 @@ export class PatientsComponent implements OnInit {
     return getDiseaseGroup(n);    
   }
 
+  updateCondition() {
+    if(this.totalPatients / this.patientCount > 1) {
+      this.isNextAv = true;
+    } else {
+      this.isNextAv = false;
+    }
+    
+    if(this.patientCount > this.patientsInCurrentPage) {
+      console.log("hey")
+      this.isPreviousAv = true;
+    } else {
+      this.isPreviousAv = false;
+    }
+  }
+
+  nextPage() {
+    if(!this.isNextAv) {
+      return;
+    }
+
+    this.currentPage = this.currentPage + 1;
+    this.add = true;
+    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
+    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
+
+  }
+
+  previousPage() {
+    if(!this.isPreviousAv) {
+      return;
+    }
+
+    this.currentPage = this.currentPage -1;
+    this.add = false;
+    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
+    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
+
+  }
 }
 
 

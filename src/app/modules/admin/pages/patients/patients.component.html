@@ -62,14 +62,14 @@
           <div id="paginator-container">
             <div>
               <mat-form-field id="pageIndex">
-                <mat-select [(ngModel)]="selectedValue" (ngModelChange)="reloadPagination()">
+                <mat-select [(ngModel)]="currentPageSize" (ngModelChange)="reloadPagination()">
                   <mat-option *ngFor="let pageSize of pageSizeOptions; index as i" [value]="pageSize">{{pageSize}}</mat-option>
                 </mat-select>
               </mat-form-field> 
             </div>
             <div id="pagination-icons">
-              <a mat-icon-button ><mat-icon>keyboard_arrow_left</mat-icon></a>
-              <a mat-icon-button ><mat-icon>keyboard_arrow_right</mat-icon></a>
+              <a mat-icon-button [ngClass]="isPreviousAv ? 'a-black' : 'a-grey'" (click)="previousPage()"><mat-icon>keyboard_arrow_left</mat-icon></a>
+              <a mat-icon-button [ngClass]="isNextAv ? 'a-black' : 'a-grey'" (click)="nextPage()"><mat-icon>keyboard_arrow_right</mat-icon></a>
             </div>
           </div>
           <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
