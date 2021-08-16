@@ -50,6 +50,13 @@ table {
     color: grey;
     cursor: default;
 }
+.table-text {
+    color: grey;
+    font-size: 0.8em;
+    /* margin-left: 10px;
+    margin-right: auto; */
+    margin: auto;
+}
 
 /* td, th {
     width: 25%;

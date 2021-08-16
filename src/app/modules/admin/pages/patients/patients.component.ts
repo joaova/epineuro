@@ -1,3 +1,4 @@
+import { PaginationDirective } from '../../../../core/services/pagination.service';
 import { getDiseaseGroup } from './../../../../core/enums/DiseaseGroup';
 import { HeadacheModel } from './../../../../core/model/HeadacheModel';
 import { Router } from '@angular/router';
@@ -6,7 +7,7 @@ import { FormDataService } from './../../../../core/services/form-data.service';
 import { PatientInfoComponent } from './../patient-info/patient-info.component';
 import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
 import { PatientServiceDTO } from './../../../../core/services/patient-service DTO';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PatientService } from 'src/app/core/services/patient-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,18 +19,14 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class PatientsComponent implements OnInit {
 
+  pageSize: number = 5;
+  patientsCount: number;
   totalPatients: number;
   patientsInCurrentPage: number;
-  patientCount: number = 0;
-  currentPageSize: number = 5;
-  currentPage: number = 0;
-  add: boolean = true;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   displayedColumns: string[] = ['id', 'gender','age', 'diseaseGroup', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
   p1: HeadacheModel;
-  isNextAv: boolean;
-  isPreviousAv: boolean;
 
   constructor(
     private service: PatientServiceDTO,
@@ -38,22 +35,25 @@ export class PatientsComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private patientDataService: FormDataService,
-    private hService: HeadacheService
+    private hService: HeadacheService,
+    public pagination: PaginationDirective
   ) {}
 
  
   ngOnInit(): void {
     // Assign the data to the data source for the table to render
     this.dataSource = new PatientDataSourceDTO(this.service);
-    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
+    this.dataSource.loadPatients(this.pagination.pageNo - 1, this.pagination.pageSize);
+    // essa merda faz algo? nem lembro
     this.countPatients();
-    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
+    this.updatePagination();
   }
 
-  reloadPagination() {
-    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
-    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
-    this.updateCondition();
+  reload() {
+    this.patientsCount = 0;
+    this.dataSource.loadPatients(this.pagination.pageNo - 1, this.pagination.pageSize);
+    this.countPatients();
+    this.updatePagination();
   }
 
   openSnackBar() {
@@ -72,29 +72,31 @@ export class PatientsComponent implements OnInit {
 
     return null;
   }
+  
+  updatePagination() {
+    this.countPatientsInCurrentPage();
+  }
 
   countPatients(): void{
     this.service.getAllpatients().subscribe(result => 
-      {this.totalPatients = result.length;},
+      {
+        this.totalPatients = result.length;
+        this.pagination.totalPages = Math.ceil(this.totalPatients / this.pagination.pageSize);
+      },
       (err) => console.log("Deu erro"),
       () => console.log("Terminou de contar") 
     );
   }
 
-  countPatientsInCurrentPage(page: number, pageSize: number, add: boolean): void {
-    this.service.getAllpatientsByPag(page, pageSize).subscribe(result => 
+  countPatientsInCurrentPage(): void {
+    this.service.getAllpatientsByPag(this.pagination.pageNo - 1, this.pagination.pageSize).subscribe(result => 
       {
-        if(!add) {
-          this.patientCount = this.patientCount - this.patientsInCurrentPage;
-        }
         this.patientsInCurrentPage = result.length
       },
       (err) => console.log("Deu erro"),
       () => {
-        if (add) {
-          this.patientCount = this.patientCount + this.patientsInCurrentPage;
-        } 
-        this.updateCondition();
+        //TODO
+        this.patientsCount = (this.pagination.pageNo - 1) * this.pageSize + this.patientsInCurrentPage;
       }
     );
   }
@@ -104,8 +106,7 @@ export class PatientsComponent implements OnInit {
       console.log(result);
       this.openSnackBar();
       this.countPatients();
-      this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
-      this.updateCondition();
+      this.dataSource.loadPatients(this.pagination.pageNo - 1, this.pagination.pageSize);
     });
 
   }
@@ -126,11 +127,15 @@ export class PatientsComponent implements OnInit {
     this.patientDataService.changeMessage("");
   }
 
-  searchPatient(same: number) {
-    console.log(same);
+  //TODO
+    //Arrumar essa função toda
+  searchPatient(same: any) {
+    if(same == '') {
+      window.location.reload();
+      return;
+    }
     this.dataSource = new PatientDataSourceDTO(this.service);
-    this.dataSource.loadPatientsBySame(same);
-    this.countPatients();
+    this.dataSource.loadPatientsBySame(same); 
   }
 
   openDialog() {
@@ -145,44 +150,6 @@ export class PatientsComponent implements OnInit {
     return getDiseaseGroup(n);    
   }
 
-  updateCondition() {
-    if(this.totalPatients / this.patientCount > 1) {
-      this.isNextAv = true;
-    } else {
-      this.isNextAv = false;
-    }
-    
-    if(this.patientCount > this.patientsInCurrentPage) {
-      console.log("hey")
-      this.isPreviousAv = true;
-    } else {
-      this.isPreviousAv = false;
-    }
-  }
-
-  nextPage() {
-    if(!this.isNextAv) {
-      return;
-    }
-
-    this.currentPage = this.currentPage + 1;
-    this.add = true;
-    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
-    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
-
-  }
-
-  previousPage() {
-    if(!this.isPreviousAv) {
-      return;
-    }
-
-    this.currentPage = this.currentPage -1;
-    this.add = false;
-    this.dataSource.loadPatients(this.currentPage, this.currentPageSize);
-    this.countPatientsInCurrentPage(this.currentPage, this.currentPageSize, this.add);
-
-  }
 }
 
 

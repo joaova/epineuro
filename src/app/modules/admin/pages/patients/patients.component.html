@@ -4,7 +4,7 @@
         <mat-form-field>
           <mat-label>Buscar</mat-label>
           <input matInput placeholder="SAME" #input>
-          <a mat-raised-button matSuffix id="searchBtn" (click)="searchPatient(input.value)" class="blueButtons"> Search </a>
+          <a mat-raised-button matSuffix id="searchBtn" (click)="searchPatient(input.value); reload()" class="blueButtons"> Search </a>
         </mat-form-field>
         <!-- *ngIf="totalPatients > 0" -->
         <div  class="mat-elevation-z8">
@@ -60,22 +60,29 @@
           </table>
           
           <div id="paginator-container">
+            <div class="table-text">
+              {{patientsCount}} - {{totalPatients}} 
+            </div>
             <div>
               <mat-form-field id="pageIndex">
-                <mat-select [(ngModel)]="currentPageSize" (ngModelChange)="reloadPagination()">
+                <mat-select [(ngModel)]="pageSize" (ngModelChange)="pagination.setPageSize(pageSize); reload()" >
                   <mat-option *ngFor="let pageSize of pageSizeOptions; index as i" [value]="pageSize">{{pageSize}}</mat-option>
                 </mat-select>
               </mat-form-field> 
             </div>
             <div id="pagination-icons">
-              <a mat-icon-button [ngClass]="isPreviousAv ? 'a-black' : 'a-grey'" (click)="previousPage()"><mat-icon>keyboard_arrow_left</mat-icon></a>
-              <a mat-icon-button [ngClass]="isNextAv ? 'a-black' : 'a-grey'" (click)="nextPage()"><mat-icon>keyboard_arrow_right</mat-icon></a>
+              <a mat-icon-button [ngClass]="pagination.isPrevAv() ? 'a-black' : 'a-grey'" (click)="pagination.prev(); reload()"><mat-icon>keyboard_arrow_left</mat-icon></a>
+              <span class="table-text">{{pagination.pageNo}} - {{pagination.totalPages}}</span>
+              <a mat-icon-button [ngClass]="pagination.isNextAv() ? 'a-black' : 'a-grey'" (click)="pagination.next(); reload()"><mat-icon>keyboard_arrow_right</mat-icon></a>
             </div>
           </div>
-          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
         </div>
     </div>
 </div>
 
-
-  
+{{this.pagination.pageSize}}
+{{this.pagination.pageNo}}
+{{this.pagination.totalPages}}
+{{this.totalPatients}}
+{{this.patientsInCurrentPage}}
+{{this.patientsCount}}
