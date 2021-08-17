@@ -50,6 +50,11 @@ export class PatientsComponent implements OnInit {
   }
 
   reload() {
+    // solução ridicula
+    if(this.pagination.totalPages == 1) {
+      return;
+    }
+
     this.patientsCount = 0;
     this.dataSource.loadPatients(this.pagination.pageNo - 1, this.pagination.pageSize);
     this.countPatients();
@@ -136,6 +141,11 @@ export class PatientsComponent implements OnInit {
     }
     this.dataSource = new PatientDataSourceDTO(this.service);
     this.dataSource.loadPatientsBySame(same); 
+    this.pageSize = 5;
+    this.patientsCount = 1;
+    this.totalPatients = 1;
+    this.patientsInCurrentPage = 1;
+    this.pagination.totalPages = 1;
   }
 
   openDialog() {

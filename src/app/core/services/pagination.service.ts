@@ -33,10 +33,19 @@ export class PaginationDirective {
   }
 
   prev() {
+    // solução ridicula
+    if(this.totalPages == 1) {
+      return;
+    }
+
     this.setPage(Math.max(1, this.pageNo - 1));
   }
 
   next() {
+    // solução ridicula
+    if(this.totalPages == 1) {
+      return;
+    }
     this.setPage(Math.min(this.totalPages, this.pageNo + 1));
   }
 

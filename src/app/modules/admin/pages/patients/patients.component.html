@@ -4,7 +4,7 @@
         <mat-form-field>
           <mat-label>Buscar</mat-label>
           <input matInput placeholder="SAME" #input>
-          <a mat-raised-button matSuffix id="searchBtn" (click)="searchPatient(input.value); reload()" class="blueButtons"> Search </a>
+          <a mat-raised-button matSuffix id="searchBtn" (click)="searchPatient(input.value)" class="blueButtons"> Search </a>
         </mat-form-field>
         <!-- *ngIf="totalPatients > 0" -->
         <div  class="mat-elevation-z8">
