@@ -16,8 +16,45 @@
                   <mat-option [value]=1>Masculino</mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Cor</mat-label>
+                <mat-select formControlName="color">
+                    <mat-option value="null"></mat-option>
+                    <mat-option *ngFor="let color of colors; index as i" [value]="i">{{colors[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Estado Civil</mat-label>
+                <mat-select formControlName="civilState">
+                    <mat-option value="null"></mat-option>
+                    <mat-option *ngFor="let civil of civilStates; index as i" [value]="i">{{civilStates[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Escolaridade</mat-label>
+                <mat-select formControlName="scholarity" name="hi">
+                    <mat-option value="null"></mat-option>
+                    <mat-option *ngFor="let scholarity of scholarities; index as i" [value]="i">{{scholarities[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Profissão</mat-label>
+                <mat-select formControlName="job">
+                    <mat-option value="null"></mat-option>
+                    <mat-option *ngFor="let job of jobs; index as i" [value]="i">{{jobs[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Religião</mat-label>
+                <mat-select formControlName="religion">
+                    <mat-option value="null"></mat-option>
+                    <mat-option *ngFor="let religion of religions; index as i" [value]="i">{{religions[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Data de nascimento</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="birthDate">
@@ -37,25 +74,37 @@
                 <mat-select formControlName="birthCity">
                     <mat-option *ngFor="let city of citiesByState | async; index as i" value="{{city.nome}}">{{city.nome}}</mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> 
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Residência</mat-label>
                 <mat-select formControlName="currentCity">
                     <mat-option *ngFor="let city of citiesRS | async; index as i" value="{{city.nome}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Início do acompanhamento ambulatorial</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="startOutpatientFollowUp">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
         </div>
         <div class="row">
             <mat-form-field appearance="fill" class="half-width">
-                <mat-label>Sei la</mat-label>
-                <mat-select formControlName="">
-                    <mat-option></mat-option>
-                </mat-select>
+                <mat-label>Término do acompanhamento ambulatorial</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="endOutpatientFollowUp">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Data da alta, se houver</mat-label>
+                <input matInput [matDatepicker]="picker3" formControlName="dischargeDate">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Grupo de Doença</mat-label>
                 <mat-select formControlName="diseaseGroup">
-                    <mat-option *ngFor="let disease of diseaseGroupList;" value="{{disease}}">{{disease}}</mat-option>
+                    <mat-option *ngFor="let disease of diseaseGr;" value="{{disease}}">{{disease}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

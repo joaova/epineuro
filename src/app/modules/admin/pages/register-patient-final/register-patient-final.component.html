@@ -1,0 +1,95 @@
+<header>
+    <h1>Fatores de risco</h1>
+</header>
+ 
+<form action="" [formGroup]="patientForm">
+    <div class="container">
+        <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>IMC</mat-label>
+                <input matInput formControlName="bmi">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Tabagismo</mat-label>
+                <mat-select formControlName="smoking">
+                  <mat-option [value]=1>Sim</mat-option>
+                  <mat-option [value]=0>Não</mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Etilismo</mat-label>
+                <mat-select formControlName="alcoholism">
+                  <mat-option [value]=1>Sim</mat-option>
+                  <mat-option [value]=0>Não</mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Outras drogas</mat-label>
+                <mat-select formControlName="drugs" multiple>
+                  <mat-option *ngFor="let drug of drugx; index as i" [value]="i">{{drugx[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Neurocirurgia prévia</mat-label>
+                <mat-select formControlName="previousNeurosurgery" multiple>
+                    <mat-option *ngFor="let neuro of neurocx; index as i" [value]="i">{{neurocx[i]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="half-width">
+                <mat-label>Exames complementares</mat-label>
+                <mat-select formControlName="exams" multiple>
+                  <mat-option *ngFor="let exam of examx; index as i" [value]="exam">{{exam}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Medicações (separadas por vírgula)</mat-label>
+                <input matInput formControlName="medications">
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <div class="cid">
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>História de doença neurológica em familiar de primeiro grau</mat-label>
+                    <input type="text"
+                        aria-label="Number"
+                        matInput
+                        [matAutocomplete]="auto"
+                        #termoDaPesquisa
+                        (keyup)="pesquisa(termoDaPesquisa.value.toUpperCase())"
+                        formControlName="firstDegreeRelative">
+                    <button mat-button *ngIf="termoDaPesquisa.value != ''" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto="matAutocomplete" panelWidth="auto">
+                      <mat-option *ngIf="disease.codigo != ''" [value]="disease.codigo + ' ' + disease.nome" (click)="addICD()">
+                        {{disease.codigo + ' ' + disease.nome}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+            </div>
+        </div>
+        <div class="row cid">
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let comorbitie of familyComorbities; index as i" #linkRef>
+                    <span>{{comorbitie.codigo}}</span>
+                    <button class="item-btn" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeDisease(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-list-item>
+              </mat-list>
+        </div>
+        <div class="row">
+            <button type="button" mat-raised-button class="form-btn" (click)="return()">Voltar</button>
+            <button mat-raised-button class="form-btn" (click)="register()">Cadastrar</button>
+        </div>
+    </div>
+</form>
+{{patientForm.controls.exams.value}}

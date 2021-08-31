@@ -1,4 +1,4 @@
-import { HeadacheModel } from './../model/HeadacheModel';
+import { PatientModel } from './../model/PatientModel';
 import { PatientDTO } from './../model/PatientDTO';
 import { BaseHttpService } from './http/base-http.service';
 import { environment } from './../../../environments/environment';
@@ -33,9 +33,9 @@ import { map } from 'rxjs/operators';
             .pipe(map(x => x.data));
     }
 
-    postPatient(param: HeadacheModel) {
+    postPatient(param: PatientModel) {
         return this.http
-            .post<HeadacheModel>(`${environment.URLSERVIDOR}headache`, param)
+            .post<PatientModel>(`${environment.URLSERVIDOR}headache`, param)
     }
 
     putPatient(param: PatientDTO) {

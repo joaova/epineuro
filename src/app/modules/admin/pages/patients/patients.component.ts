@@ -1,8 +1,7 @@
+import { PatientModel } from './../../../../core/model/PatientModel';
 import { PaginationDirective } from '../../../../core/services/pagination.service';
-import { getDiseaseGroup } from './../../../../core/enums/DiseaseGroup';
-import { HeadacheModel } from './../../../../core/model/HeadacheModel';
+import { DISEASE_GROUP, SEXO } from './../../../../core/enums/enums';
 import { Router } from '@angular/router';
-import { HeadacheService } from './../../../../core/services/headache.service';
 import { FormDataService } from './../../../../core/services/form-data.service';
 import { PatientInfoComponent } from './../patient-info/patient-info.component';
 import { PatientDataSourceDTO } from './../../../../core/data-sources/patient-data-source DTO';
@@ -26,7 +25,7 @@ export class PatientsComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   displayedColumns: string[] = ['id', 'gender','age', 'diseaseGroup', 'info', 'edit', 'delete'];
   dataSource: PatientDataSourceDTO;
-  p1: HeadacheModel;
+  p1: PatientModel;
 
   constructor(
     private service: PatientServiceDTO,
@@ -35,7 +34,6 @@ export class PatientsComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private patientDataService: FormDataService,
-    private hService: HeadacheService,
     public pagination: PaginationDirective
   ) {}
 
@@ -66,16 +64,7 @@ export class PatientsComponent implements OnInit {
   }
 
   public getSexo(cod: number): string {
-
-    if(cod == 0) {
-        return 'Feminino';
-    }
-
-    if(cod == 1) {
-        return 'Masculino';
-    }
-
-    return null;
+    return SEXO[cod];
   }
   
   updatePagination() {
@@ -117,7 +106,7 @@ export class PatientsComponent implements OnInit {
   }
 
   editPatient(id: number) {
-    this.hService.getPatientById(id)
+    this.pService.getPatientById(id)
     .subscribe(result => {
       this.p1 = result;
     },
@@ -157,7 +146,7 @@ export class PatientsComponent implements OnInit {
   }
 
   getDG(n: number): String {
-    return getDiseaseGroup(n);    
+    return DISEASE_GROUP[n];    
   }
 
 }

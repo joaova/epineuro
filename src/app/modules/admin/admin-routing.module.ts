@@ -1,4 +1,4 @@
-import { RegisterPatientHeadacheComponent } from './pages/register-patient-headache/register-patient-headache.component';
+import { RegisterPatientFinalComponent } from './pages/register-patient-final/register-patient-final.component';
 import { AuthGuard } from './../security/auth.guard';
 import { RegisterPatientComponent } from './pages/register-patient/register-patient.component';
 import { IndexComponent } from './../home/pages/index/index.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
         {path: 'sobre', component: AboutComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
         {path: 'equipe', component: TeamComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
         {path: 'cadastro', component: RegisterPatientComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }},
-        {path: 'cadastro-0', component: RegisterPatientHeadacheComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }}
+        {path: 'cadastro-final', component: RegisterPatientFinalComponent, canActivate:[AuthGuard], data: { roles: ['EP01'] }}
       ]
     }
 ];

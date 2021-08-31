@@ -1,4 +1,5 @@
-import { DiseaseGroup } from './../../../../core/enums/DiseaseGroup';
+import { PatientService } from 'src/app/core/services/patient-service';
+import { DISEASE_GROUP, SCHOLARITY, CIVIL_STATE, JOB, RELIGION, COLOR } from './../../../../core/enums/enums';
 import { State } from './../../../../core/model/state-model';
 import { LocationService } from './../../../../core/services/location.service';
 import { City } from './../../../../core/model/city-model';
@@ -7,7 +8,7 @@ import { PatientModel } from './../../../../core/model/PatientModel';
 import { environment } from './../../../../../environments/environment';
 import { DiseaseModel } from './../../../../core/model/disease-model';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, retry, switchMap } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
@@ -23,33 +24,62 @@ export class RegisterPatientComponent implements OnInit {
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
   disease: DiseaseModel = {codigo: '', nome: ''};
+  civilStates: string[] = CIVIL_STATE;
+  colors: string[] = COLOR;
+  scholarities: string[] = SCHOLARITY;
+  jobs: string[] = JOB;
+  religions: string[] = RELIGION;
+  diseaseGr: string[] = DISEASE_GROUP;
   comorbities: DiseaseModel[] = [];
   citiesRS: Observable<City[]>;
   citiesByState: Observable<City[]>;
   states: Observable<State[]>;
   patientVerification: number = 0;
-  diseaseGroupList: String[] = ["Cefaleia", "Distúrbios do Movimento", 
-  "Epilepsia", "Demências", "Doenças Cerebrovasculares", "Doenças Neuromusculares"];
   patient: PatientModel = {
     id: null,
     gender: null,
-    birthDate: null,
+    color: null,
+    civilState: null,
+    scholarity: null,
     birthState: null,
     birthCity: null,
     currentCity: null,
+    job: null,
+    religion: null,
+    birthDate: null,
+    startOutpatientFollowUp: null,
+    endOutpatientFollowUp: null,
+    dischargeDate: null,
     diseaseGroup: null,
-    comorbities: null
+    comorbities: null, 
+    bmi: null,
+    smoking: null,
+    alcoholism: null,
+    drugs: null,
+    previousNeurosurgery: null,
+    firstDegreeRelative: null,
+    exams: null,
+    medications: null
   }
 
   patientForm = this.fb.group({
     id: [''],
     gender: [''],
-    birthDate: [''],
+    color: [''],
+    civilState: [''],
+    scholarity: [''],
     birthState: [''],
     birthCity: [''],
     currentCity: [''],
+    job: [''],
+    religion: [''],
+    birthDate: [''],
+    startOutpatientFollowUp: [''],
+    endOutpatientFollowUp: [''],
+    dischargeDate: [''],
     diseaseGroup: [''],
-    cid: ['']
+    cid: [''], 
+   
   })
 
   constructor(
@@ -57,7 +87,7 @@ export class RegisterPatientComponent implements OnInit {
     private router: Router, 
     private fb: FormBuilder,
     private patientDataService: FormDataService,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) { }
 
   ngOnInit(): void {
@@ -78,15 +108,22 @@ export class RegisterPatientComponent implements OnInit {
         this.patientForm = this.fb.group({
           id: [this.patient.id],
           gender: [this.patient.gender],
-          birthDate: [this.patient.birthDate],
+          color: [this.patient.color],
+          civilState: [this.patient.civilState],
+          scholarity: [this.patient.scholarity],
           birthState: [this.patient.birthState],
           birthCity: [this.patient.birthCity],
           currentCity: [this.patient.currentCity],
-          diseaseGroup: [this.diseaseGroupList[this.patient.diseaseGroup]],
-          cid: ['']
+          job: [this.patient.job],
+          religion: [this.patient.religion],
+          birthDate: [this.patient.birthDate],
+          startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
+          endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
+          dischargeDate: [this.patient.dischargeDate],
+          diseaseGroup: [this.patient.diseaseGroup],
+          cid: [''],             
         })
         this.loadCities();
-        console.log(this.patient, 'hi');
         this.comorbities = this.patient.comorbities;
       }
     });
@@ -156,14 +193,22 @@ export class RegisterPatientComponent implements OnInit {
     this.patient.comorbities = this.comorbities;
     this.patient.currentCity = this.patientForm.controls.currentCity.value;
     this.patient.gender = this.patientForm.controls.gender.value;
-    this.patient.diseaseGroup = this.diseaseGroupList.indexOf(this.patientForm.controls.diseaseGroup.value);
-
+    this.patient.diseaseGroup = this.patientForm.controls.diseaseGroup.value;
+    this.patient.scholarity = this.patientForm.controls.scholarity.value
+    this.patient.civilState = this.patientForm.controls.civilState.value
+    this.patient.job = this.patientForm.controls.job.value;
+    this.patient.religion = this.patientForm.controls.religion.value;
+    this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
+    this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
+    this.patient.dischargeDate = this.patientForm.controls.dischargeDate.value;
+    
+    console.log("Paciente parte 1");
+    console.log(this.patient);
     if(this.patientVerification == 0) {
       this.patientDataService.changeMessage(this.patient);
     }
     console.log(this.patientVerification);
-    // URL dinamica
-    this.router.navigateByUrl(`/admin/cadastro-${this.patient.diseaseGroup}`);
+    this.router.navigateByUrl('/admin/cadastro-final');
   }
 
 }

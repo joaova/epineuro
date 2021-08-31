@@ -1,9 +1,7 @@
-import { Sexo } from './../enums/sexo';
-import { DiseaseModel } from './disease-model';
 
 export class PatientDTO {
     id: number;
-    gender: Sexo;
+    gender: number;
     currentCity: string;
     age: number;
     mainDisease: String;   

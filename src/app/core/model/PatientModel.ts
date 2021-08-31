@@ -1,14 +1,28 @@
 import { DiseaseModel } from './disease-model';
-import { Sexo } from './../enums/sexo';
-import { DiseaseGroup } from '../enums/DiseaseGroup';
 
 export class PatientModel {
     id: number;
-    gender: Sexo;
-    birthDate: Date;
+    gender: number;
+    color: number;
+    civilState: number;
+    scholarity: number;
     birthState: string;
     birthCity: string;
     currentCity: string;
-    diseaseGroup: DiseaseGroup;
+    job: number;
+    religion: number;
+    birthDate: Date;
+    startOutpatientFollowUp: Date;
+    endOutpatientFollowUp: Date;
+    dischargeDate: Date;
+    diseaseGroup: number;
     comorbities: DiseaseModel[];  
+    bmi: string;
+    smoking: number;
+    alcoholism: number;
+    drugs: string[];
+    previousNeurosurgery: string[];
+    firstDegreeRelative: DiseaseModel[];
+    exams: string[];
+    medications: string[];
 }
