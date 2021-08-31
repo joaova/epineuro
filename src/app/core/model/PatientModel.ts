@@ -1,3 +1,7 @@
+import { Surgery } from './SurgeryModel';
+import { Medication } from './MedicationModel';
+import { Exam } from './ExamModel';
+import { Drug } from './DrugModel';
 import { DiseaseModel } from './disease-model';
 
 export class PatientModel {
@@ -20,9 +24,9 @@ export class PatientModel {
     bmi: string;
     smoking: number;
     alcoholism: number;
-    drugs: string[];
-    previousNeurosurgery: string[];
+    drugs: Drug[];
+    previousNeurosurgery: Surgery[];
     firstDegreeRelative: DiseaseModel[];
-    exams: string[];
-    medications: string[];
+    exams: Exam[];
+    medications: Medication[];
 }

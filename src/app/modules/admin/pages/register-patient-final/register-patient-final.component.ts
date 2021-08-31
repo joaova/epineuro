@@ -1,3 +1,7 @@
+import { Surgery } from './../../../../core/model/SurgeryModel';
+import { Exam } from './../../../../core/model/ExamModel';
+import { Drug } from './../../../../core/model/DrugModel';
+import { Medication } from './../../../../core/model/MedicationModel';
 import { EXAMS, NEUROSURGERY, DRUGS } from './../../../../core/enums/enums';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../../../../environments/environment';
@@ -18,6 +22,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPatientFinalComponent implements OnInit {
 
+  prev: Surgery[] = [];
+  med: Medication[] = [];
+  dru: Drug[] = [];
+  ex: Exam[] = [];
   examx: string[] = EXAMS;
   neurocx: string[] = NEUROSURGERY;
   drugx: string[] = DRUGS;
@@ -151,15 +159,60 @@ export class RegisterPatientFinalComponent implements OnInit {
     this.router.navigateByUrl('/admin/cadastro');
   }
 
+  arrayToObject() {
+    console.log(this.patientForm.controls.medications.value);
+    console.log(this.patientForm.controls.drugs.value);
+    console.log(this.patientForm.controls.exams.value);
+    console.log(this.patientForm.controls.previousNeurosurgery.value);
+    if(this.patientForm.controls.medications.value != null) {
+      let arr = this.patientForm.controls.medications.value.split(',');
+      for (let i = 0; i < arr.length; i++) {
+        this.med.push({name: arr[i]});
+      }
+    } else {
+      this.med = null;
+    }
+
+    if(this.patientForm.controls.previousNeurosurgery.value != null) {
+      let arr = this.patientForm.controls.previousNeurosurgery.value;
+      for (let i = 0; i < arr.length; i++) {
+        this.prev.push({name: arr[i]});
+      }
+    } else {
+      this.prev = null;
+    }
+
+    if(this.patientForm.controls.exams.value != null) {
+      let arr = this.patientForm.controls.exams.value;
+      for (let i = 0; i < arr.length; i++) {
+        this.ex.push({name: arr[i]});
+      }
+    } else {
+      this.ex = null;
+    }
+
+    if(this.patientForm.controls.drugs.value != null) {
+      let arr = this.patientForm.controls.drugs.value;
+      for (let i = 0; i < arr.length; i++) {
+        this.dru.push({name: arr[i]});
+      }
+    } else {
+      this.dru = null;
+    }
+    
+  }
+
   register(): void {
+    this.arrayToObject();
     this.patient.bmi = this.patientForm.controls.bmi.value;
     this.patient.smoking = this.patientForm.controls.smoking.value;
     this.patient.alcoholism = this.patientForm.controls.alcoholism.value;
-    this.patient.drugs = this.patientForm.controls.drugs.value;
-    this.patient.previousNeurosurgery = this.patientForm.controls.previousNeurosurgery.value;
-    this.patient.firstDegreeRelative = this.patientForm.controls.firstDegreeRelative.value;
-    this.patient.exams = this.patientForm.controls.exams.value;
-    this.patient.medications = this.patientForm.controls.medications.value.split(',');
+    this.patient.drugs = this.dru;
+    this.patient.previousNeurosurgery = this.prev;
+    this.patient.firstDegreeRelative = this.familyComorbities;
+    console.log(this.familyComorbities);
+    this.patient.exams = this.ex;
+    this.patient.medications = this.med;
     console.log(this.patientForm.controls.medications.value)
     console.log(this.patient);
     this.service.postPatient(this.patient).subscribe(resposta => {

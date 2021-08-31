@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register-patient.component.css']
 })
 export class RegisterPatientComponent implements OnInit {
-
+  
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
   disease: DiseaseModel = {codigo: '', nome: ''};

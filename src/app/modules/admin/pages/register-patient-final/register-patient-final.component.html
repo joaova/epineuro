@@ -29,7 +29,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Outras drogas</mat-label>
                 <mat-select formControlName="drugs" multiple>
-                  <mat-option *ngFor="let drug of drugx; index as i" [value]="i">{{drugx[i]}}</mat-option>
+                  <mat-option *ngFor="let drug of drugx; index as i" [value]="drug">{{drugx[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
             
@@ -38,7 +38,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Neurocirurgia prévia</mat-label>
                 <mat-select formControlName="previousNeurosurgery" multiple>
-                    <mat-option *ngFor="let neuro of neurocx; index as i" [value]="i">{{neurocx[i]}}</mat-option>
+                    <mat-option *ngFor="let neuro of neurocx; index as i" [value]="neuro">{{neurocx[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
@@ -93,3 +93,7 @@
     </div>
 </form>
 {{patientForm.controls.exams.value}}
+{{patientForm.controls.drugs.value}}
+{{patientForm.controls.medications.value}}
+{{patientForm.controls.exams.value}}
+{{patientForm.controls.previousNeurosurgery.value}}
