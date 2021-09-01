@@ -1,4 +1,3 @@
-import { PatientService } from 'src/app/core/services/patient-service';
 import { DISEASE_GROUP, SCHOLARITY, CIVIL_STATE, JOB, RELIGION, COLOR } from './../../../../core/enums/enums';
 import { State } from './../../../../core/model/state-model';
 import { LocationService } from './../../../../core/services/location.service';
@@ -11,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, retry, switchMap } from 'rxjs/operators';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -63,8 +62,8 @@ export class RegisterPatientComponent implements OnInit {
   }
 
   patientForm = this.fb.group({
-    id: [''],
-    gender: [''],
+    id: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+    gender: [null, Validators.required],
     color: [''],
     civilState: [''],
     scholarity: [''],
@@ -73,11 +72,11 @@ export class RegisterPatientComponent implements OnInit {
     currentCity: [''],
     job: [''],
     religion: [''],
-    birthDate: [''],
+    birthDate: [null, Validators.required],
     startOutpatientFollowUp: [''],
     endOutpatientFollowUp: [''],
     dischargeDate: [''],
-    diseaseGroup: [''],
+    diseaseGroup: [null, Validators.required],
     cid: [''], 
    
   })
@@ -96,18 +95,15 @@ export class RegisterPatientComponent implements OnInit {
     this.citiesRS = this.locationService.getCityRS();
     this.states = this.locationService.getAllStates();
 
-    console.log('hi');
-
     // verifica se o objeto esta vazio
     // caso exista, preenche com os dados atuais
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
       if (patient != '') {
         this.patient = patient;
         this.patientVerification = 1;
-        console.log(this.patient);
         this.patientForm = this.fb.group({
-          id: [this.patient.id],
-          gender: [this.patient.gender],
+          id: [this.patient.id, [Validators.required,Validators.pattern(/^[0-9]\d*$/)]],
+          gender: [this.patient.gender, Validators.required],
           color: [this.patient.color],
           civilState: [this.patient.civilState],
           scholarity: [this.patient.scholarity],
@@ -116,7 +112,7 @@ export class RegisterPatientComponent implements OnInit {
           currentCity: [this.patient.currentCity],
           job: [this.patient.job],
           religion: [this.patient.religion],
-          birthDate: [this.patient.birthDate],
+          birthDate: [this.patient.birthDate, Validators.required],
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
           dischargeDate: [this.patient.dischargeDate],
@@ -185,30 +181,37 @@ export class RegisterPatientComponent implements OnInit {
     this.citiesByState = this.locationService.getCityByState(this.patientForm.controls.birthState.value);
   }
 
-  public advance(): void {
-    this.patient.id = this.patientForm.get('id').value;
-    this.patient.birthCity = this.patientForm.controls.birthCity.value;
-    this.patient.birthDate = this.patientForm.controls.birthDate.value;
-    this.patient.birthState = this.patientForm.controls.birthState.value;
-    this.patient.comorbities = this.comorbities;
-    this.patient.currentCity = this.patientForm.controls.currentCity.value;
-    this.patient.gender = this.patientForm.controls.gender.value;
-    this.patient.diseaseGroup = this.diseaseGr.indexOf(this.patientForm.controls.diseaseGroup.value);
-    this.patient.scholarity = this.patientForm.controls.scholarity.value
-    this.patient.civilState = this.patientForm.controls.civilState.value
-    this.patient.job = this.patientForm.controls.job.value;
-    this.patient.religion = this.patientForm.controls.religion.value;
-    this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
-    this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
-    this.patient.dischargeDate = this.patientForm.controls.dischargeDate.value;
-    
-    console.log("Paciente parte 1");
-    console.log(this.patient);
-    if(this.patientVerification == 0) {
-      this.patientDataService.changeMessage(this.patient);
+  advance() {
+    console.log(this.patientForm)
+    if(this.patientForm.valid) {
+      this.patient.id = this.patientForm.get('id').value;
+      this.patient.birthCity = this.patientForm.controls.birthCity.value;
+      this.patient.birthDate = this.patientForm.controls.birthDate.value;
+      this.patient.birthState = this.patientForm.controls.birthState.value;
+      this.patient.comorbities = this.comorbities;
+      this.patient.currentCity = this.patientForm.controls.currentCity.value;
+      this.patient.gender = this.patientForm.controls.gender.value;
+      this.patient.diseaseGroup = this.diseaseGr.indexOf(this.patientForm.controls.diseaseGroup.value);
+      this.patient.scholarity = this.patientForm.controls.scholarity.value
+      this.patient.civilState = this.patientForm.controls.civilState.value
+      this.patient.job = this.patientForm.controls.job.value;
+      this.patient.religion = this.patientForm.controls.religion.value;
+      this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
+      this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
+      this.patient.dischargeDate = this.patientForm.controls.dischargeDate.value;
+      
+      if(this.patientVerification == 0) {
+        this.patientDataService.changeMessage(this.patient);
+      }
+
+      this.router.navigateByUrl('/admin/cadastro-final');
+    } else {
+      Object.keys(this.patientForm.controls).forEach(campo => {
+        const controle = this.patientForm.get(campo);
+        controle.markAsTouched();
+      });
     }
-    console.log(this.patientVerification);
-    this.router.navigateByUrl('/admin/cadastro-final');
+    
   }
 
 }
