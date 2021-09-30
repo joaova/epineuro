@@ -64,20 +64,20 @@ export class RegisterPatientComponent implements OnInit {
   patientForm = this.fb.group({
     id: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
     gender: [null, Validators.required],
-    color: [''],
-    civilState: [''],
-    scholarity: [''],
-    birthState: [''],
-    birthCity: [''],
-    currentCity: [''],
-    job: [''],
-    religion: [''],
+    color: null,
+    civilState: null,
+    scholarity: null,
+    birthState: null,
+    birthCity: null,
+    currentCity: null,
+    job: null,
+    religion: null,
     birthDate: [null, Validators.required],
-    startOutpatientFollowUp: [''],
-    endOutpatientFollowUp: [''],
-    dischargeDate: [''],
+    startOutpatientFollowUp: null,
+    endOutpatientFollowUp: null,
+    dischargeDate: null,
     diseaseGroup: [null, Validators.required],
-    cid: [''], 
+    cid: [null, Validators.required], 
    
   })
 
@@ -116,9 +116,10 @@ export class RegisterPatientComponent implements OnInit {
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
           dischargeDate: [this.patient.dischargeDate],
-          diseaseGroup: [this.patient.diseaseGroup],
-          cid: [''],             
+          diseaseGroup: [this.patient.diseaseGroup, Validators.required],
+          cid: [this.patient.comorbities, Validators.required],             
         })
+        console.log(this.patient);
         this.loadCities();
         this.comorbities = this.patient.comorbities;
       }
@@ -191,7 +192,7 @@ export class RegisterPatientComponent implements OnInit {
       this.patient.comorbities = this.comorbities;
       this.patient.currentCity = this.patientForm.controls.currentCity.value;
       this.patient.gender = this.patientForm.controls.gender.value;
-      this.patient.diseaseGroup = this.diseaseGr.indexOf(this.patientForm.controls.diseaseGroup.value);
+      this.patient.diseaseGroup = this.patientForm.controls.diseaseGroup.value;
       this.patient.scholarity = this.patientForm.controls.scholarity.value
       this.patient.civilState = this.patientForm.controls.civilState.value
       this.patient.job = this.patientForm.controls.job.value;

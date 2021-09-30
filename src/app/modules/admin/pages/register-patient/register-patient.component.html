@@ -1,7 +1,7 @@
 <header>
     <h1>Registrar Paciente</h1>
 </header>
-
+ 
 <form [formGroup]="patientForm">
     <div class="container">
         <div class="row">
@@ -19,7 +19,7 @@
               <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cor</mat-label>
                 <mat-select formControlName="color">
-                    <mat-option value="null"></mat-option>
+                    <mat-option value="null">?</mat-option>
                     <mat-option *ngFor="let color of colors; index as i" [value]="i">{{colors[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -28,21 +28,21 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Estado Civil</mat-label>
                 <mat-select formControlName="civilState">
-                    <mat-option value="null"></mat-option>
+                    <mat-option value="null">?</mat-option>
                     <mat-option *ngFor="let civil of civilStates; index as i" [value]="i">{{civilStates[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Escolaridade</mat-label>
                 <mat-select formControlName="scholarity" name="hi">
-                    <mat-option value="null"></mat-option>
+                    <mat-option value="null">?</mat-option>
                     <mat-option *ngFor="let scholarity of scholarities; index as i" [value]="i">{{scholarities[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Profissão</mat-label>
                 <mat-select formControlName="job">
-                    <mat-option value="null"></mat-option>
+                    <mat-option value="null">?</mat-option>
                     <mat-option *ngFor="let job of jobs; index as i" [value]="i">{{jobs[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -51,7 +51,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Religião</mat-label>
                 <mat-select formControlName="religion">
-                    <mat-option value="null"></mat-option>
+                    <mat-option value="null">?</mat-option>
                     <mat-option *ngFor="let religion of religions; index as i" [value]="i">{{religions[i]}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -64,7 +64,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Estado de nascimento</mat-label>
                 <mat-select formControlName="birthState" (selectionChange)="loadCities()">
-                    <mat-option *ngFor="let state of states | async; index as i" value="{{state.sigla}}">{{state.nome}}</mat-option>
+                    <mat-option *ngFor="let state of states | async" value="{{state.sigla}}">{{state.nome}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -72,7 +72,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cidade de Nascimento</mat-label>
                 <mat-select formControlName="birthCity">
-                    <mat-option *ngFor="let city of citiesByState | async; index as i" value="{{city.nome}}">{{city.nome}}</mat-option>
+                    <mat-option *ngFor="let city of citiesByState | async" value="{{city.nome}}">{{city.nome}}</mat-option>
                 </mat-select>
             </mat-form-field> 
             <mat-form-field appearance="fill" class="half-width">
@@ -104,7 +104,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Grupo de Doença</mat-label>
                 <mat-select formControlName="diseaseGroup">
-                    <mat-option *ngFor="let disease of diseaseGr;" value="{{disease}}">{{disease}}</mat-option>
+                    <mat-option *ngFor="let disease of diseaseGr; index as i" [value]="i">{{disease}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

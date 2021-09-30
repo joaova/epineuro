@@ -13,10 +13,16 @@ import { map } from 'rxjs/operators';
   
     constructor(private http: BaseHttpService, private httpCli: HttpClient) { }
 
-
+ 
     getPatientById(id: number): Observable<PatientModel> {
         return this.http
             .getAll<PatientModel>(`${environment.URLSERVIDOR}patient/${id}`)
+            .pipe(map(x => x.data));
+    }
+
+    getPatientModelById(id: number): Observable<PatientModel> {
+        return this.http
+            .getAll<PatientModel>(`${environment.URLSERVIDOR}patient/full/${id}`)
             .pipe(map(x => x.data));
     }
 

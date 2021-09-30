@@ -106,7 +106,7 @@ export class PatientsComponent implements OnInit {
   }
 
   editPatient(id: number) {
-    this.pService.getPatientById(id)
+    this.pService.getPatientModelById(id)
     .subscribe(result => {
       this.p1 = result;
     },
@@ -137,12 +137,21 @@ export class PatientsComponent implements OnInit {
     this.pagination.totalPages = 1;
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(PatientInfoComponent);
+  openDialog(id: number) {
+    this.pService.getPatientModelById(id)
+    .subscribe(result => {
+      this.p1 = result;
+    },
+    (err) => (console.log("Deu ruim")),
+    () => {
+      this.patientDataService.changeMessage(this.p1); 
+      const dialogRef = this.dialog.open(PatientInfoComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      }); 
+    }); 
+    
   }
 
   getDG(n: number): String {

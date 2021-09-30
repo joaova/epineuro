@@ -15,7 +15,7 @@
               <th mat-header-cell *matHeaderCellDef> SAME </th>
               <td mat-cell *matCellDef="let row"> {{row.id}} </td>
             </ng-container>
-        
+         
             <!-- Progress Column -->
             <ng-container matColumnDef="gender">
               <th mat-header-cell *matHeaderCellDef> Sexo </th>
@@ -36,7 +36,7 @@
         
             <ng-container matColumnDef="info">
               <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let row"> <a class="blueButtons" (click)="openDialog()" mat-raised-button><mat-icon>info</mat-icon></a> </td>
+              <td mat-cell *matCellDef="let row"> <a class="blueButtons" (click)="openDialog(row.id)" mat-raised-button><mat-icon>info</mat-icon></a> </td>
             </ng-container>
 
             <!-- Color Column -->
@@ -44,7 +44,7 @@
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let row"> <a class="blueButtons" (click)="editPatient(row.id)" mat-raised-button><mat-icon>edit</mat-icon></a> </td>
             </ng-container>
-
+ 
             <ng-container matColumnDef="delete">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let row"> <a class="blueButtons" (click)="deletePatient(row.id)" mat-raised-button><mat-icon>delete</mat-icon></a> </td>
@@ -79,10 +79,3 @@
         </div>
     </div>
 </div>
-
-{{this.pagination.pageSize}}
-{{this.pagination.pageNo}}
-{{this.pagination.totalPages}}
-{{this.totalPatients}}
-{{this.patientsInCurrentPage}}
-{{this.patientsCount}}

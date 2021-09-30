@@ -1,4 +1,124 @@
+<div class="container">
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">SAME:</span> {{patient.id}}
+            </li>
+            <li class="item">
+                <span class="list-title">Sexo:</span> {{sexo[patient.gender]}}
+            </li>
+            <li class="item">
+                <span class="list-title">Cor:</span> {{colors[patient.color]}}
+            </li>
+            
+        </ul>   
+    </div>
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">Estado Civil:</span> {{civilStates[patient.civilState]}}
+            </li>
+            <li class="item">
+                <span class="list-title">Escolaridade:</span> {{scholarities[patient.scholarity]}}              
+            </li>
 
-<mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+            <li class="item">
+                <span class="list-title">Naturalidade:</span> {{patient.birthState}}
+            </li> 
+                  
+        </ul>    
+    </div>
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">Cidade onde nasceu:</span> {{patient.birthCity}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Local de residência:</span> {{patient.currentCity}}
+            </li>  
+
+            <li class="item">
+                <span class="list-title">Profissão:</span> {{jobs[patient.job]}}   
+            </li>              
+        </ul>         
+    </div>
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">Religião:</span> {{religions[patient.religion]}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Data de nascimento:</span> {{patient.birthDate}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Início do acompanhamento:</span> {{patient.startOutpatientFollowUp}}
+            </li>       
+        </ul>     
+    </div>
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">Perdeu acompanhamento em:</span> {{patient.endOutpatientFollowUp}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Data da alta ambulatorial:</span> {{patient.dischargeDate}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Grupo da doença:</span> {{patient.diseaseGroup}}
+            </li>
+        </ul> 
+    </div>
+    <div class="row">
+        <ul>
+            <li class="item">
+                <span class="list-title">Comorbidades:</span> {{patient.comorbities}}
+            </li> 
+
+            <li class="item">
+                <span class="list-title">IMC:</span> {{patient.bmi}}
+            </li>
+
+            <li class="item">
+                <span class="list-title">Tabagismo:</span> {{patient.smoking}}  
+            </li>
+        </ul> 
+        <div class="row">
+            <ul>
+                <li class="item">
+                    <span class="list-title">Etilismo:</span> {{patient.alcoholism}}
+                </li>
+
+                <li class="item">
+                    <span class="list-title">Outras drogas:</span> {{patient.drugs}}
+                </li>
+
+                <li class="item">
+                    <span class="list-title">Neurocirurgia prévia:</span> {{patient.previousNeurosurgery}}
+                </li>      
+            </ul> 
+        </div>
+        <div class="row">
+            <ul>
+                <li class="item">
+                    <span class="list-title">História familia de doença neurológica:</span> {{patient.firstDegreeRelative}}
+                </li>
+
+                <li class="item">
+                    <span class="list-title">Exames realizados:</span> {{patient.exams}}
+                </li>
+
+                <li class="item">
+                    <span class="list-title">Medicações em uso:</span> {{patient.medications}}   
+                </li>
+            </ul> 
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>Voltar</button>
 </mat-dialog-actions>

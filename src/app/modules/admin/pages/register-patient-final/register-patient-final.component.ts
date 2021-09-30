@@ -160,10 +160,6 @@ export class RegisterPatientFinalComponent implements OnInit {
   }
 
   arrayToObject() {
-    console.log(this.patientForm.controls.medications.value);
-    console.log(this.patientForm.controls.drugs.value);
-    console.log(this.patientForm.controls.exams.value);
-    console.log(this.patientForm.controls.previousNeurosurgery.value);
     if(this.patientForm.controls.medications.value != null) {
       let arr = this.patientForm.controls.medications.value.split(',');
       for (let i = 0; i < arr.length; i++) {

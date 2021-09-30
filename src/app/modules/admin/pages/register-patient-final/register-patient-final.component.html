@@ -12,6 +12,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Tabagismo</mat-label>
                 <mat-select formControlName="smoking">
+                  <mat-option [value]=null>?</mat-option>
                   <mat-option [value]=1>Sim</mat-option>
                   <mat-option [value]=0>Não</mat-option>
                 </mat-select>
@@ -22,6 +23,7 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Etilismo</mat-label>
                 <mat-select formControlName="alcoholism">
+                  <mat-option [value]=null>?</mat-option>
                   <mat-option [value]=1>Sim</mat-option>
                   <mat-option [value]=0>Não</mat-option>
                 </mat-select>
@@ -57,7 +59,7 @@
         <div class="row">
             <div class="cid">
                 <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>História de doença neurológica em familiar de primeiro grau</mat-label>
+                    <mat-label>História de doença neurológica em familiar de primeiro grau (CID)</mat-label>
                     <input type="text"
                         aria-label="Number"
                         matInput

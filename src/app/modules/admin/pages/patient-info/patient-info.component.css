@@ -1,0 +1,20 @@
+.container {
+    width: 1000px;
+}
+
+.row {
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.item {
+    display: inline-block;
+    list-style: none;
+    width: 33%;
+
+}
+
+.list-title {
+    font-weight: bold;
+
+}
