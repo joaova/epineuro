@@ -70,7 +70,7 @@ export class PatientsComponent implements OnInit {
   updatePagination() {
     this.countPatientsInCurrentPage();
   }
-
+ 
   countPatients(): void{
     this.service.getAllpatients().subscribe(result => 
       {

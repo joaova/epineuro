@@ -1,3 +1,3 @@
 export class Medication {
-    name: string;
+    id: string;
 }

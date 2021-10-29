@@ -1,4 +1,3 @@
 export interface DiseaseModel {
-    codigo: string;
-    nome: string;
+    id: string;
 }

@@ -1,15 +1,17 @@
-import { DISEASE_GROUP, SCHOLARITY, CIVIL_STATE, JOB, RELIGION, COLOR } from './../../../../core/enums/enums';
+import { PatientService } from 'src/app/core/services/patient-service';
+import { diseaseGroup } from './../../../../core/model/diseaseGroup';
+import { scholarity } from './../../../../core/model/scholarity';
+import { color } from './../../../../core/model/color';
+import { civilState } from './../../../../core/model/civilState';
 import { State } from './../../../../core/model/state-model';
 import { LocationService } from './../../../../core/services/location.service';
 import { City } from './../../../../core/model/city-model';
 import { FormDataService } from '../../../../core/services/form-data.service';
 import { PatientModel } from './../../../../core/model/PatientModel';
-import { environment } from './../../../../../environments/environment';
 import { DiseaseModel } from './../../../../core/model/disease-model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, retry, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -22,13 +24,11 @@ export class RegisterPatientComponent implements OnInit {
   
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
-  disease: DiseaseModel = {codigo: '', nome: ''};
-  civilStates: string[] = CIVIL_STATE;
-  colors: string[] = COLOR;
-  scholarities: string[] = SCHOLARITY;
-  jobs: string[] = JOB;
-  religions: string[] = RELIGION;
-  diseaseGr: string[] = DISEASE_GROUP;
+  disease: DiseaseModel = {id: ''};
+  civilStates: Observable<civilState[]>;
+  colors: Observable<color[]>;
+  scholarities: Observable<scholarity[]>;
+  diseaseGr: Observable<diseaseGroup[]>;
   comorbities: DiseaseModel[] = [];
   citiesRS: Observable<City[]>;
   citiesByState: Observable<City[]>;
@@ -44,21 +44,19 @@ export class RegisterPatientComponent implements OnInit {
     birthCity: null,
     currentCity: null,
     job: null,
-    religion: null,
     birthDate: null,
     startOutpatientFollowUp: null,
     endOutpatientFollowUp: null,
-    dischargeDate: null,
     diseaseGroup: null,
     comorbities: null, 
-    bmi: null,
     smoking: null,
     alcoholism: null,
     drugs: null,
     previousNeurosurgery: null,
     firstDegreeRelative: null,
     exams: null,
-    medications: null
+    medications: null,
+    patientUpdated: null
   }
 
   patientForm = this.fb.group({
@@ -71,13 +69,13 @@ export class RegisterPatientComponent implements OnInit {
     birthCity: null,
     currentCity: null,
     job: null,
-    religion: null,
     birthDate: [null, Validators.required],
     startOutpatientFollowUp: null,
     endOutpatientFollowUp: null,
     dischargeDate: null,
     diseaseGroup: [null, Validators.required],
     cid: [null, Validators.required], 
+    patientUpdated: null
    
   })
 
@@ -87,6 +85,7 @@ export class RegisterPatientComponent implements OnInit {
     private fb: FormBuilder,
     private patientDataService: FormDataService,
     private locationService: LocationService,
+    private patientService: PatientService
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +93,12 @@ export class RegisterPatientComponent implements OnInit {
     // testando api localidades
     this.citiesRS = this.locationService.getCityRS();
     this.states = this.locationService.getAllStates();
+
+    // inicializa as variáveis do banco
+    this.scholarities = this.patientService.getAllSchol();
+    this.colors = this.patientService.getAllColor();
+    this.diseaseGr = this.patientService.getAllDisG();
+    this.civilStates = this.patientService.getAllCivil();
 
     // verifica se o objeto esta vazio
     // caso exista, preenche com os dados atuais
@@ -111,66 +116,36 @@ export class RegisterPatientComponent implements OnInit {
           birthCity: [this.patient.birthCity],
           currentCity: [this.patient.currentCity],
           job: [this.patient.job],
-          religion: [this.patient.religion],
           birthDate: [this.patient.birthDate, Validators.required],
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
-          dischargeDate: [this.patient.dischargeDate],
           diseaseGroup: [this.patient.diseaseGroup, Validators.required],
-          cid: [this.patient.comorbities, Validators.required],             
+          cid: [this.patient.comorbities, Validators.required],  
+          patientUpdated: [this.patient.patientUpdated]           
         })
         console.log(this.patient);
         this.loadCities();
         this.comorbities = this.patient.comorbities;
+
       }
     });
 
-    // pesquisa doenca pelo cid10
-    this.diseaseObs = this.subjectPesquisa
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((termo: string) => {
-
-          if(termo.trim() === '') {
-            return of<DiseaseModel>();
-          }
-
-          return this.http.get(`${environment.URLCIDAPI}${termo}`)
-            .pipe(
-              retry(10),
-              map((resposta: DiseaseModel) => resposta)
-            ) 
-        }),
-        catchError((erro: any) => {
-          return of<DiseaseModel>();
-        })
-      );
-
-    this.diseaseObs.subscribe((resposta: DiseaseModel) => {
-      this.disease = resposta;
-      // this.disease = resposta.codigo + ' ' + resposta.nome
-      // this.diseaseICD = resposta.codigo;
-    })
-
-  }
-
-  public pesquisa(termo: string): void {
-    this.subjectPesquisa.next(termo);
+    // inicializa variaveis, pegando do back-end
+    
 
   }
   
-  public addICD(): void {
-    if(this.disease.codigo != '') {
-      this.comorbities.push({codigo: this.disease.codigo, nome: this.disease.nome});
+  public addICD(dis: string): void {
+    if(dis != '') {
+      this.comorbities.push({id: dis});
       this.subjectPesquisa.next('');
-      this.disease = {codigo: '', nome: ''};
+      this.disease = {id: ''};
     }  
   }
 
   public clear(): void {
     this.subjectPesquisa.next('');
-    this.disease = {codigo: '', nome: ''};
+    this.disease = {id: ''};
     this.patientForm.controls.cid.setValue('');
   }
 
@@ -184,6 +159,10 @@ export class RegisterPatientComponent implements OnInit {
 
   advance() {
     console.log(this.patientForm)
+    console.log(this.patientForm.controls.color.value)
+    if (this.comorbities.length == 0) {
+      this.patientForm.controls.cid.setValue(null);
+    }
     if(this.patientForm.valid) {
       this.patient.id = this.patientForm.get('id').value;
       this.patient.birthCity = this.patientForm.controls.birthCity.value;
@@ -192,15 +171,23 @@ export class RegisterPatientComponent implements OnInit {
       this.patient.comorbities = this.comorbities;
       this.patient.currentCity = this.patientForm.controls.currentCity.value;
       this.patient.gender = this.patientForm.controls.gender.value;
-      this.patient.diseaseGroup = this.patientForm.controls.diseaseGroup.value;
-      this.patient.scholarity = this.patientForm.controls.scholarity.value
-      this.patient.civilState = this.patientForm.controls.civilState.value
+      this.patient.diseaseGroup = {id: this.patientForm.controls.diseaseGroup.value.id, name: this.patientForm.controls.diseaseGroup.value.name};
       this.patient.job = this.patientForm.controls.job.value;
-      this.patient.religion = this.patientForm.controls.religion.value;
       this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
       this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
-      this.patient.dischargeDate = this.patientForm.controls.dischargeDate.value;
-      
+
+      if (this.patientForm.controls.color.value != null) {
+        this.patient.color = {id: this.patientForm.controls.color.value.id, name: this.patientForm.controls.color.value.name};
+      }
+
+      if (this.patientForm.controls.scholarity.value != null) {
+        this.patient.scholarity = {id: this.patientForm.controls.scholarity.value.id, name: this.patientForm.controls.scholarity.value.name}
+      }
+
+      if (this.patientForm.controls.civilState.value != null) {
+        this.patient.civilState = {id: this.patientForm.controls.civilState.value.id, name: this.patientForm.controls.civilState.value.name}
+      }
+
       if(this.patientVerification == 0) {
         this.patientDataService.changeMessage(this.patient);
       }

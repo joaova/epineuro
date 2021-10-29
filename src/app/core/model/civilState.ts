@@ -1,4 +1,4 @@
-export class Surgery {
+export interface civilState {
     id: number;
     name: string;
 }

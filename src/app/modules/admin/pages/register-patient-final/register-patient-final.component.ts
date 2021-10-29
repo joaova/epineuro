@@ -2,17 +2,15 @@ import { Surgery } from './../../../../core/model/SurgeryModel';
 import { Exam } from './../../../../core/model/ExamModel';
 import { Drug } from './../../../../core/model/DrugModel';
 import { Medication } from './../../../../core/model/MedicationModel';
-import { EXAMS, NEUROSURGERY, DRUGS } from './../../../../core/enums/enums';
+import { DRUGS } from './../../../../core/enums/enums';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../../../../environments/environment';
-import { debounceTime, distinctUntilChanged, switchMap, retry, map, catchError } from 'rxjs/operators';
 import { DiseaseModel } from './../../../../core/model/disease-model';
 import { Observable, Subject, of } from 'rxjs';
 import { PatientModel } from './../../../../core/model/PatientModel';
 import { PatientService } from './../../../../core/services/patient-service';
 import { Router } from '@angular/router';
 import { FormDataService } from './../../../../core/services/form-data.service';
-import { FormArray, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -21,17 +19,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register-patient-final.component.css']
 })
 export class RegisterPatientFinalComponent implements OnInit {
-
+ 
   prev: Surgery[] = [];
   med: Medication[] = [];
   dru: Drug[] = [];
   ex: Exam[] = [];
-  examx: string[] = EXAMS;
-  neurocx: string[] = NEUROSURGERY;
-  drugx: string[] = DRUGS;
+  examx: Observable<Exam[]>;
+  neurocx: Observable<Surgery[]>;
+  drugx: Observable<Drug[]>;
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
-  disease: DiseaseModel = {codigo: '', nome: ''};
+  disease: DiseaseModel = {id: ''};
   familyComorbities: DiseaseModel[] = [];
   medications: string[];
   patient: PatientModel;
@@ -45,21 +43,19 @@ export class RegisterPatientFinalComponent implements OnInit {
     birthCity: null,
     currentCity: null,
     job: null,
-    religion: null,
     birthDate: null,
     previousNeurosurgery: null,
     exams: null,
     drugs: null,
     startOutpatientFollowUp: null,
     endOutpatientFollowUp: null,
-    dischargeDate: null,
     diseaseGroup: null,
     comorbities: null,
-    bmi: null,
     smoking: null,
     alcoholism: null,
     firstDegreeRelative: null,
-    medications: null 
+    medications: null,
+    patientUpdated: null
   }); 
 
   constructor(
@@ -84,52 +80,23 @@ export class RegisterPatientFinalComponent implements OnInit {
           birthCity: [this.patient.birthCity],
           currentCity: [this.patient.currentCity],
           job: [this.patient.job],
-          religion: [this.patient.religion],
           birthDate: [this.patient.birthDate],
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
-          dischargeDate: [this.patient.dischargeDate],
           diseaseGroup: [this.patient.diseaseGroup],
           comorbities: [this.patient.comorbities], 
-          bmi: [this.patient.bmi],
           smoking: [this.patient.smoking],
           alcoholism: [this.patient.alcoholism],
           drugs: [this.patient.drugs],
           previousNeurosurgery: [this.patient.previousNeurosurgery],
           firstDegreeRelative: [this.patient.firstDegreeRelative],
           exams: [this.patient.exams],
-          medications: [this.patient.medications]
+          medications: [this.patient.medications],
+          patientUpdated: [this.patient.patientUpdated]
         })
     });
 
-    // pesquisa doenca pelo cid10
-    this.diseaseObs = this.subjectPesquisa
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((termo: string) => {
-
-          if(termo.trim() === '') {
-            return of<DiseaseModel>();
-          }
-
-          return this.http.get(`${environment.URLCIDAPI}${termo}`)
-            .pipe(
-              retry(10),
-              map((resposta: DiseaseModel) => resposta)
-            ) 
-        }),
-        catchError((erro: any) => {
-          return of<DiseaseModel>();
-        })
-      );
-
-    this.diseaseObs.subscribe((resposta: DiseaseModel) => {
-      this.disease = resposta;
-      // this.disease = resposta.codigo + ' ' + resposta.nome
-      // this.diseaseICD = resposta.codigo;
-    })
-
+    
   }
 
   public pesquisa(termo: string): void {
@@ -137,18 +104,18 @@ export class RegisterPatientFinalComponent implements OnInit {
 
   }
   
-  public addICD(): void {
-    if(this.disease.codigo != '') {
-      this.familyComorbities.push({codigo: this.disease.codigo, nome: this.disease.nome});
+  public addICD(dis: string): void {
+    if(dis != '') {
+      this.familyComorbities.push({id: dis});
       this.subjectPesquisa.next('');
-      this.disease = {codigo: '', nome: ''};
+      this.disease = {id: ''};
     }  
   }
 
   public clear(): void {
     this.subjectPesquisa.next('');
-    this.disease = {codigo: '', nome: ''};
-    this.patientForm.controls.cid.setValue('');
+    this.disease = {id: ''};
+    this.patientForm.controls.firstDegreeRelative.setValue('');
   }
 
   public removeDisease(i: number): void {
@@ -156,6 +123,7 @@ export class RegisterPatientFinalComponent implements OnInit {
   }
 
   return(): void {
+    console.log(this.patient)
     this.router.navigateByUrl('/admin/cadastro');
   }
 
@@ -163,7 +131,7 @@ export class RegisterPatientFinalComponent implements OnInit {
     if(this.patientForm.controls.medications.value != null) {
       let arr = this.patientForm.controls.medications.value.split(',');
       for (let i = 0; i < arr.length; i++) {
-        this.med.push({name: arr[i]});
+        this.med.push({id: arr[i]});
       }
     } else {
       this.med = null;
@@ -172,7 +140,7 @@ export class RegisterPatientFinalComponent implements OnInit {
     if(this.patientForm.controls.previousNeurosurgery.value != null) {
       let arr = this.patientForm.controls.previousNeurosurgery.value;
       for (let i = 0; i < arr.length; i++) {
-        this.prev.push({name: arr[i]});
+        this.prev.push({id: arr[i], name: null});
       }
     } else {
       this.prev = null;
@@ -181,7 +149,7 @@ export class RegisterPatientFinalComponent implements OnInit {
     if(this.patientForm.controls.exams.value != null) {
       let arr = this.patientForm.controls.exams.value;
       for (let i = 0; i < arr.length; i++) {
-        this.ex.push({name: arr[i]});
+        this.ex.push({id: arr[i], name: null});
       }
     } else {
       this.ex = null;
@@ -190,7 +158,7 @@ export class RegisterPatientFinalComponent implements OnInit {
     if(this.patientForm.controls.drugs.value != null) {
       let arr = this.patientForm.controls.drugs.value;
       for (let i = 0; i < arr.length; i++) {
-        this.dru.push({name: arr[i]});
+        this.dru.push({id: arr[i], name: null});
       }
     } else {
       this.dru = null;
@@ -200,7 +168,6 @@ export class RegisterPatientFinalComponent implements OnInit {
 
   register(): void {
     this.arrayToObject();
-    this.patient.bmi = this.patientForm.controls.bmi.value;
     this.patient.smoking = this.patientForm.controls.smoking.value;
     this.patient.alcoholism = this.patientForm.controls.alcoholism.value;
     this.patient.drugs = this.dru;

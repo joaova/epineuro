@@ -1,4 +1,4 @@
-export class Surgery {
+export interface color {
     id: number;
     name: string;
 }

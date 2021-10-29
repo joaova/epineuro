@@ -1,4 +1,4 @@
-export class Surgery {
+export interface scholarity {
     id: number;
     name: string;
 }

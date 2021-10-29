@@ -1,10 +1,5 @@
 export const SEXO = ["Feminino", "Masculino"];
 
-export const RELIGION = ["Católica", "Evangélica", "Sem religião", "Espírita", "Religiões afro-brasileiras", "Ateu", "Judaica", "Outra não citada"];
-
-export const JOB = ["Agro", "Indústria", "Construção civil", "Comércio", "Funcionário Público", "Profissional liberal",
-"Atividades informais", "Trabalho em casa", "Trbalho doméstico", "Lar", "Desempregado" ,"Outro" ];
-
 export const DISEASE_GROUP = ["Cefaleia", "Distúrbios do movimento", "Epilepsia", "Demências", "Doenças Cerebrovasculares",
 "Doenças neuromusculares", "Doenças neuroinfecciosas", "Doenças da medula espinal", "Doenças do sistema nervoso periférico e do neurônio motor",
 "Doenças do sono", "Distúrbios autonômicos", "Neuro-otologia", "Esclerose múltipla e outras doenças inflamatórias", "Neuro-oncologia"];
