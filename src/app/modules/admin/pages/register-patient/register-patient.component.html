@@ -19,8 +19,8 @@
               <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Cor</mat-label>
                 <mat-select formControlName="color">
-                    <mat-option value="null"></mat-option>
-                    <mat-option *ngFor="let color of colors | async" [value]="color">{{color.name}}</mat-option>
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option *ngFor="let color of colors | async" [value]="color.id">{{color.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div> 
@@ -28,15 +28,15 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Estado Civil</mat-label>
                 <mat-select formControlName="civilState">
-                    <mat-option value="null"></mat-option>
-                    <mat-option *ngFor="let civil of civilStates | async" [value]="civil">{{civil.name}}</mat-option>
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option *ngFor="let civil of civilStates | async" [value]="civil.id">{{civil.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Escolaridade</mat-label>
                 <mat-select formControlName="scholarity" name="hi">
-                    <mat-option value="null"></mat-option>
-                    <mat-option *ngFor="let scholarity of scholarities | async" [value]="scholarity">{{scholarity.name}}</mat-option>
+                    <mat-option [value]="null"></mat-option>
+                    <mat-option *ngFor="let scholarity of scholarities | async" [value]="scholarity.id">{{scholarity.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
@@ -90,7 +90,7 @@
             <mat-form-field appearance="fill" class="h-width">
                 <mat-label>Grupo de Doença</mat-label>
                 <mat-select formControlName="diseaseGroup">
-                    <mat-option *ngFor="let disease of diseaseGr | async" [value]="disease">{{disease.name}}</mat-option>
+                    <mat-option *ngFor="let disease of diseaseGr | async" [value]="disease.id">{{disease.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

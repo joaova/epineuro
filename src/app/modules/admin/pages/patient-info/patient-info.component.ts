@@ -1,5 +1,5 @@
+import { PatientCompleteDTO } from './../../../../core/model/PatientCompleteDTO';
 import { FormDataService } from './../../../../core/services/form-data.service';
-import { PatientModel } from './../../../../core/model/PatientModel';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientInfoComponent implements OnInit {
 
-  patient: PatientModel;
+  patient: PatientCompleteDTO;
   sexo = ['Feminino', 'Masculino'];
   bol = ['não', 'sim']
 

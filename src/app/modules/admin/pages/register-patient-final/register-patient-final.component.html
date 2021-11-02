@@ -24,7 +24,7 @@
             <mat-form-field appearance="fill" class="third-width">
                 <mat-label>Outras drogas</mat-label>
                 <mat-select formControlName="drugs" multiple>
-                  <mat-option *ngFor="let drug of drugx; index as i" [value]="drug">{{drugx[i]}}</mat-option>
+                  <mat-option *ngFor="let drug of drugx | async" [value]="drug.id">{{drug.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             
@@ -33,13 +33,13 @@
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Neurocirurgia prévia</mat-label>
                 <mat-select formControlName="previousNeurosurgery" multiple>
-                    <mat-option *ngFor="let neuro of neurocx; index as i" [value]="neuro">{{neurocx[i]}}</mat-option>
+                    <mat-option *ngFor="let neuro of neurocx | async" [value]="neuro.id">{{neuro.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="half-width">
                 <mat-label>Exames complementares</mat-label>
                 <mat-select formControlName="exams" multiple>
-                  <mat-option *ngFor="let exam of examx; index as i" [value]="exam">{{exam}}</mat-option>
+                  <mat-option *ngFor="let exam of examx | async" [value]="exam.id">{{exam.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

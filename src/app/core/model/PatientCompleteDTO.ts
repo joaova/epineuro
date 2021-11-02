@@ -1,14 +1,14 @@
 import { diseaseGroup } from './diseaseGroup';
-import { scholarity } from './scholarity';
 import { color } from './color';
 import { civilState } from './civilState';
+import { scholarity } from './scholarity';
 import { Surgery } from './SurgeryModel';
 import { Medication } from './MedicationModel';
 import { Exam } from './ExamModel';
 import { Drug } from './DrugModel';
 import { DiseaseModel } from './disease-model';
 
-export class PatientModel {
+export class PatientCompleteDTO {
     id: number;
     gender: number;
     color: color;

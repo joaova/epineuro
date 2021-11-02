@@ -109,9 +109,9 @@ export class RegisterPatientComponent implements OnInit {
         this.patientForm = this.fb.group({
           id: [this.patient.id, [Validators.required,Validators.pattern(/^[0-9]\d*$/)]],
           gender: [this.patient.gender, Validators.required],
-          color: [this.patient.color],
-          civilState: [this.patient.civilState],
-          scholarity: [this.patient.scholarity],
+          color: [this.patient.color == null ? null : this.patient.color.id],
+          civilState: [this.patient.civilState == null ? null : this.patient.civilState.id],
+          scholarity: [this.patient.scholarity == null ? null : this.patient.scholarity.id],
           birthState: [this.patient.birthState],
           birthCity: [this.patient.birthCity],
           currentCity: [this.patient.currentCity],
@@ -119,11 +119,12 @@ export class RegisterPatientComponent implements OnInit {
           birthDate: [this.patient.birthDate, Validators.required],
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
-          diseaseGroup: [this.patient.diseaseGroup, Validators.required],
+          diseaseGroup: [this.patient.diseaseGroup.id, Validators.required],
           cid: [this.patient.comorbities, Validators.required],  
           patientUpdated: [this.patient.patientUpdated]           
         })
         console.log(this.patient);
+        console.log(this.patientForm.controls.color.value)
         this.loadCities();
         this.comorbities = this.patient.comorbities;
 
@@ -158,8 +159,7 @@ export class RegisterPatientComponent implements OnInit {
   }
 
   advance() {
-    console.log(this.patientForm)
-    console.log(this.patientForm.controls.color.value)
+
     if (this.comorbities.length == 0) {
       this.patientForm.controls.cid.setValue(null);
     }
@@ -171,21 +171,22 @@ export class RegisterPatientComponent implements OnInit {
       this.patient.comorbities = this.comorbities;
       this.patient.currentCity = this.patientForm.controls.currentCity.value;
       this.patient.gender = this.patientForm.controls.gender.value;
-      this.patient.diseaseGroup = {id: this.patientForm.controls.diseaseGroup.value.id, name: this.patientForm.controls.diseaseGroup.value.name};
+      this.patient.diseaseGroup = {id: this.patientForm.controls.diseaseGroup.value, name: null};
       this.patient.job = this.patientForm.controls.job.value;
       this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
       this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
 
       if (this.patientForm.controls.color.value != null) {
-        this.patient.color = {id: this.patientForm.controls.color.value.id, name: this.patientForm.controls.color.value.name};
-      }
+        console.log("aaaaaa")
+        this.patient.color = {id: this.patientForm.controls.color.value, name: null};
+      } 
 
       if (this.patientForm.controls.scholarity.value != null) {
-        this.patient.scholarity = {id: this.patientForm.controls.scholarity.value.id, name: this.patientForm.controls.scholarity.value.name}
-      }
+        this.patient.scholarity = {id: this.patientForm.controls.scholarity.value, name: null}
+      } 
 
       if (this.patientForm.controls.civilState.value != null) {
-        this.patient.civilState = {id: this.patientForm.controls.civilState.value.id, name: this.patientForm.controls.civilState.value.name}
+        this.patient.civilState = {id: this.patientForm.controls.civilState.value, name: null}
       }
 
       if(this.patientVerification == 0) {

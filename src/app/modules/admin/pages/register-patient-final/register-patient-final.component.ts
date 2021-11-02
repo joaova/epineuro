@@ -20,6 +20,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPatientFinalComponent implements OnInit {
  
+  meds: String = '';
+  surgs: number[] = [];
+  exs: number[] = [];
+  drs: number[] = [];
+
+
   prev: Surgery[] = [];
   med: Medication[] = [];
   dru: Drug[] = [];
@@ -67,9 +73,42 @@ export class RegisterPatientFinalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
+    this.drugx = this.service.getAllDrugs();
+    this.examx = this.service.getAllExams();
+    this.neurocx = this.service.getAllSurgeries();
+
+
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
         console.log(patient);
+
         this.patient = patient;
+
+        for(let med in this.patient.medications) {
+
+          if(this.meds.length == 0) {
+            this.meds = this.patient.medications[med].id
+          } else {
+            this.meds +=  ',' + this.patient.medications[med].id
+          } 
+          
+        }
+
+        for(let s in this.patient.previousNeurosurgery) {
+          this.surgs.push(this.patient.previousNeurosurgery[s].id)
+        }
+
+        for(let e in this.patient.exams) {
+          this.exs.push(this.patient.exams[e].id)
+        }
+
+        for(let d in this.patient.drugs) {
+          this.drs.push(this.patient.drugs[d].id)
+        }
+
+        console.log(this.surgs)
+
         this.patientForm = this.fb.group({
           id: [this.patient.id],
           gender: [this.patient.gender],
@@ -87,13 +126,14 @@ export class RegisterPatientFinalComponent implements OnInit {
           comorbities: [this.patient.comorbities], 
           smoking: [this.patient.smoking],
           alcoholism: [this.patient.alcoholism],
-          drugs: [this.patient.drugs],
-          previousNeurosurgery: [this.patient.previousNeurosurgery],
+          drugs: [this.drs],
+          previousNeurosurgery: [this.surgs],
           firstDegreeRelative: [this.patient.firstDegreeRelative],
-          exams: [this.patient.exams],
-          medications: [this.patient.medications],
+          exams: [this.exs],
+          medications: [this.meds],
           patientUpdated: [this.patient.patientUpdated]
         })
+        
     });
 
     
@@ -129,15 +169,18 @@ export class RegisterPatientFinalComponent implements OnInit {
 
   arrayToObject() {
     if(this.patientForm.controls.medications.value != null) {
-      let arr = this.patientForm.controls.medications.value.split(',');
+      
+      let arr = this.patientForm.controls.medications.value.trim();
+      arr = arr.replace(/ /g, "");
+      arr = arr.split(',');
       for (let i = 0; i < arr.length; i++) {
-        this.med.push({id: arr[i]});
+        this.med.push({id: arr[i].toUpperCase()});
       }
     } else {
       this.med = null;
     }
 
-    if(this.patientForm.controls.previousNeurosurgery.value != null) {
+    if(this.patientForm.controls.previousNeurosurgery.value != null && this.patientForm.controls.previousNeurosurgery.value.length != 0) {
       let arr = this.patientForm.controls.previousNeurosurgery.value;
       for (let i = 0; i < arr.length; i++) {
         this.prev.push({id: arr[i], name: null});
@@ -146,7 +189,7 @@ export class RegisterPatientFinalComponent implements OnInit {
       this.prev = null;
     }
 
-    if(this.patientForm.controls.exams.value != null) {
+    if(this.patientForm.controls.exams.value != null && this.patientForm.controls.exams.value.length != 0) {
       let arr = this.patientForm.controls.exams.value;
       for (let i = 0; i < arr.length; i++) {
         this.ex.push({id: arr[i], name: null});
@@ -155,7 +198,7 @@ export class RegisterPatientFinalComponent implements OnInit {
       this.ex = null;
     }
 
-    if(this.patientForm.controls.drugs.value != null) {
+    if(this.patientForm.controls.drugs.value != null && this.patientForm.controls.drugs.value.length != 0) {
       let arr = this.patientForm.controls.drugs.value;
       for (let i = 0; i < arr.length; i++) {
         this.dru.push({id: arr[i], name: null});
@@ -173,10 +216,8 @@ export class RegisterPatientFinalComponent implements OnInit {
     this.patient.drugs = this.dru;
     this.patient.previousNeurosurgery = this.prev;
     this.patient.firstDegreeRelative = this.familyComorbities;
-    console.log(this.familyComorbities);
     this.patient.exams = this.ex;
     this.patient.medications = this.med;
-    console.log(this.patientForm.controls.medications.value)
     console.log(this.patient);
     this.service.postPatient(this.patient).subscribe(resposta => {
       console.log(resposta);
