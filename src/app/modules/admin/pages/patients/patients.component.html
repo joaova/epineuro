@@ -47,7 +47,8 @@
  
             <ng-container matColumnDef="delete">
               <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let row"> <a class="blueButtons" (click)="deletePatient(row.id)" mat-raised-button><mat-icon>delete</mat-icon></a> </td>
+              <td mat-cell *matCellDef="let row"> <a class="blueButtons"  mat-raised-button><mat-icon>delete</mat-icon></a> </td>
+              <!-- (click)="deletePatient(row.id)" -->
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
