@@ -4,5 +4,5 @@ export class PatientDTO {
     gender: number;
     currentCity: string;
     age: number;
-    mainDisease: String;   
+    mainDisease: string;   
 }

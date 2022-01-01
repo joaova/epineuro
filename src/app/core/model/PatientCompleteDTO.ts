@@ -21,7 +21,7 @@ export class PatientCompleteDTO {
     birthDate: Date;
     startOutpatientFollowUp: Date;
     endOutpatientFollowUp: Date;
-    diseaseGroup: diseaseGroup;
+    diseaseGroup: diseaseGroup[];
     comorbities: DiseaseModel[];  
     smoking: number;
     alcoholism: number;

@@ -2,7 +2,6 @@ import { Surgery } from './../../../../core/model/SurgeryModel';
 import { Exam } from './../../../../core/model/ExamModel';
 import { Drug } from './../../../../core/model/DrugModel';
 import { Medication } from './../../../../core/model/MedicationModel';
-import { DRUGS } from './../../../../core/enums/enums';
 import { HttpClient } from '@angular/common/http';
 import { DiseaseModel } from './../../../../core/model/disease-model';
 import { Observable, Subject, of } from 'rxjs';

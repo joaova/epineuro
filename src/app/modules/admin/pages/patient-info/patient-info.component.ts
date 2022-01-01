@@ -15,6 +15,7 @@ export class PatientInfoComponent implements OnInit {
   comorbities: string[] = [];
   history: string[] = [];
   drugs: string[] = [];
+  diseaseGroups: string[] = [];
   medications: string[] = [];
   exams: string[] = [];
   surgery: string[] = [];
@@ -50,6 +51,10 @@ export class PatientInfoComponent implements OnInit {
 
     this.patient.exams.forEach(e => {
       this.exams.push(e.name);
+    })
+
+    this.patient.diseaseGroup.forEach(dg => {
+      this.diseaseGroups.push(dg.name);
     })
 
   }

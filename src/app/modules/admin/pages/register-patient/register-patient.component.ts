@@ -22,6 +22,10 @@ import { Router } from '@angular/router';
 })
 export class RegisterPatientComponent implements OnInit {
   
+  diseaseGroups: number[] = [];
+
+  dGroup: diseaseGroup[] = [];
+
   subjectPesquisa: Subject<string> = new Subject<string>();
   diseaseObs: Observable<DiseaseModel>;
   disease: DiseaseModel = {id: ''};
@@ -89,7 +93,6 @@ export class RegisterPatientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     // testando api localidades
     this.citiesRS = this.locationService.getCityRS();
     this.states = this.locationService.getAllStates();
@@ -119,7 +122,7 @@ export class RegisterPatientComponent implements OnInit {
           birthDate: [this.patient.birthDate, Validators.required],
           startOutpatientFollowUp: [this.patient.startOutpatientFollowUp],
           endOutpatientFollowUp: [this.patient.endOutpatientFollowUp],
-          diseaseGroup: [this.patient.diseaseGroup.id, Validators.required],
+          diseaseGroup: [this.diseaseGroups, Validators.required],
           cid: [this.patient.comorbities, Validators.required],  
           patientUpdated: [this.patient.patientUpdated]           
         })
@@ -171,10 +174,16 @@ export class RegisterPatientComponent implements OnInit {
       this.patient.comorbities = this.comorbities;
       this.patient.currentCity = this.patientForm.controls.currentCity.value;
       this.patient.gender = this.patientForm.controls.gender.value;
-      this.patient.diseaseGroup = {id: this.patientForm.controls.diseaseGroup.value, name: null};
       this.patient.job = this.patientForm.controls.job.value;
       this.patient.startOutpatientFollowUp = this.patientForm.controls.startOutpatientFollowUp.value;
       this.patient.endOutpatientFollowUp = this.patientForm.controls.endOutpatientFollowUp.value;
+
+      let arr = this.patientForm.controls.diseaseGroup.value;
+      for (let i = 0; i < arr.length; i++) {
+        this.dGroup.push({id: arr[i], name: null});
+      }
+
+      this.patient.diseaseGroup = this.dGroup;
 
       if (this.patientForm.controls.color.value != null) {
         console.log("aaaaaa")

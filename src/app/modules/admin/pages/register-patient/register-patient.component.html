@@ -79,7 +79,7 @@
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field> 
-        </div>
+        </div> 
         <div class="row">
             <mat-form-field appearance="fill" class="h-width">
                 <mat-label>Término do acompanhamento ambulatorial (por alta ou outro motivo):</mat-label>
@@ -89,7 +89,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="h-width">
                 <mat-label>Grupo de Doença</mat-label>
-                <mat-select formControlName="diseaseGroup">
+                <mat-select formControlName="diseaseGroup" multiple>
                     <mat-option *ngFor="let disease of diseaseGr | async" [value]="disease.id">{{disease.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
