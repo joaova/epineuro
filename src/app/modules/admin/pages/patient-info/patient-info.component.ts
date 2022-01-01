@@ -65,8 +65,8 @@ export class PatientInfoComponent implements OnInit {
     
     this.patient.diseaseGroup.forEach(dg => {
       this.diseaseGroups.push(dg.name);
-      console.log(this.diseaseGroups);
     })
+
 
   }
   

@@ -8,7 +8,7 @@
                 <span class="list-title">Sexo:</span> {{sexo[patient.gender]}}
             </li>
             <li class="item">
-                <span class="list-title">Cor:</span> {{patient.color.name}}
+                <span class="list-title">Cor:</span> {{patient.color != null ? patient.color.name : ''}}
             </li>
             
         </ul>   
@@ -16,14 +16,14 @@
     <div class="row">
         <ul>
             <li class="item">
-                <span class="list-title">Estado Civil:</span> {{patient.civilState.name}}
+                <span class="list-title">Estado Civil:</span> {{patient.civilState != null ? patient.civilState.name : ''}}
             </li>
             <li class="item">
-                <span class="list-title">Escolaridade:</span> {{patient.scholarity.name}}              
+                <span class="list-title">Escolaridade:</span> {{patient.scholarity != null ? patient.scholarity.name : ''}}              
             </li>
 
             <li class="item">
-                <span class="list-title">Naturalidade:</span> {{patient.birthState}}
+                <span class="list-title">Naturalidade:</span> {{patient.birthState != null ? patient.birthState : ''}}
             </li> 
                   
         </ul>    
@@ -31,15 +31,15 @@
     <div class="row">
         <ul>
             <li class="item">
-                <span class="list-title">Cidade onde nasceu:</span> {{patient.birthCity}}
+                <span class="list-title">Cidade onde nasceu:</span> {{patient.birthCity != null ? patient.birthCity : ''}}
             </li>
 
             <li class="item">
-                <span class="list-title">Local de residência:</span> {{patient.currentCity}}
+                <span class="list-title">Local de residência:</span> {{patient.currentCity != null ? patient.currentCity : ''}}
             </li>  
 
             <li class="item">
-                <span class="list-title">Profissão:</span> {{patient.job}}   
+                <span class="list-title">Profissão:</span> {{patient.job != null ? patient.job : ''}}   
             </li>              
         </ul>         
     </div>
@@ -47,18 +47,18 @@
         <ul>
 
             <li class="item">
-                <span class="list-title">Data de nascimento:</span> {{patient.birthDate}}
+                <span class="list-title">Data de nascimento:</span> {{patient.birthDate != null ? patient.birthDate : ''}}
             </li>
 
             <li class="item">
-                <span class="list-title">Início do acompanhamento:</span> {{patient.startOutpatientFollowUp}}
+                <span class="list-title">Início do acompanhamento:</span> {{patient.startOutpatientFollowUp != null ? patient.startOutpatientFollowUp : ''}}
             </li>       
         </ul>     
     </div>
     <div class="row">
         <ul>
             <li class="item">
-                <span class="list-title">Término do acompanhamento:</span> {{patient.endOutpatientFollowUp}}
+                <span class="list-title">Término do acompanhamento:</span> {{patient.endOutpatientFollowUp != null ? patient.endOutpatientFollowUp : ''}}
             </li>
 
             <li class="item">
