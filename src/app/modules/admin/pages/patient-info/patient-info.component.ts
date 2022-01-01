@@ -33,28 +33,39 @@ export class PatientInfoComponent implements OnInit {
       this.comorbities.push(d.id);
     })
 
-    this.patient.drugs.forEach(dr => {
-      this.drugs.push(dr.name);
-    })
-
-    this.patient.previousNeurosurgery.forEach(s => {
-      this.surgery.push(s.name);
-    })
-
-    this.patient.firstDegreeRelative.forEach(f => {
-      this.history.push(f.id);
-    })
-
-    this.patient.medications.forEach(m => {
-      this.medications.push(m.id);
-    })
-
-    this.patient.exams.forEach(e => {
-      this.exams.push(e.name);
-    })
-
+    if (this.patient.drugs != null) {
+      this.patient.drugs.forEach(dr => {
+        this.drugs.push(dr.name);
+      })
+    }
+    
+    if (this.patient.previousNeurosurgery != null) {
+      this.patient.previousNeurosurgery.forEach(s => {
+        this.surgery.push(s.name);
+      })
+    }
+    
+    if (this.patient.firstDegreeRelative != null) {
+      this.patient.firstDegreeRelative.forEach(f => {
+        this.history.push(f.id);
+      })
+    }
+    
+    if (this.patient.medications != null) {
+      this.patient.medications.forEach(m => {
+        this.medications.push(m.id);
+      })
+    }
+    
+    if (this.patient.exams != null) {
+      this.patient.exams.forEach(e => {
+        this.exams.push(e.name);
+      })
+    }
+    
     this.patient.diseaseGroup.forEach(dg => {
       this.diseaseGroups.push(dg.name);
+      console.log(this.diseaseGroups);
     })
 
   }

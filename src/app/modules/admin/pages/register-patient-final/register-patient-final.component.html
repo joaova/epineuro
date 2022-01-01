@@ -20,7 +20,7 @@
                   <mat-option [value]=1>Sim</mat-option>
                   <mat-option [value]=0>Não</mat-option>
                 </mat-select>
-              </mat-form-field>
+              </mat-form-field> 
             <mat-form-field appearance="fill" class="third-width">
                 <mat-label>Outras drogas</mat-label>
                 <mat-select formControlName="drugs" multiple>
@@ -40,7 +40,7 @@
                 <mat-label>Exames complementares</mat-label>
                 <mat-select formControlName="exams" multiple>
                   <mat-option *ngFor="let exam of examx | async" [value]="exam.id">{{exam.name}}</mat-option>
-                </mat-select>
+                </mat-select> 
             </mat-form-field>
         </div>
         <div class="row">

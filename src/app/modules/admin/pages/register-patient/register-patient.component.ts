@@ -106,9 +106,16 @@ export class RegisterPatientComponent implements OnInit {
     // verifica se o objeto esta vazio
     // caso exista, preenche com os dados atuais
     this.patientDataService.currentMessagePessoa.subscribe((patient) => {
+
       if (patient != '') {
         this.patient = patient;
         this.patientVerification = 1;
+
+        for(let d in this.patient.diseaseGroup) {
+          this.diseaseGroups.push(this.patient.diseaseGroup[d].id)
+          console.log(this.diseaseGroups)
+        }
+
         this.patientForm = this.fb.group({
           id: [this.patient.id, [Validators.required,Validators.pattern(/^[0-9]\d*$/)]],
           gender: [this.patient.gender, Validators.required],
